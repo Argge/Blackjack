@@ -39,14 +39,12 @@ body {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    color: #ff0000;
     box-shadow: 0 0 10px 5px rgba(17, 17, 17, 0.3);
 }
 
 .symbolMain {
     width: 40px;
     height: 40px;
-    background-color: #ff0000;
     rotate: 45deg;
 }
 
@@ -72,7 +70,6 @@ body {
 .symbol {
     width: 15px;
     height: 15px;
-    background-color: #ff0000;
     rotate: 45deg;
 }
 
@@ -94,3 +91,20 @@ body {
 }
 
 /* BUTTON */
+
+
+.colorRedBG {
+    background-color: #ff0000;
+}
+
+.colorRed {
+    color: #ff0000;
+}
+
+.colorBlackBG {
+    background-color: #000;
+}
+
+.colorBlack {
+    color: #000;
+}
