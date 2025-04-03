@@ -5,16 +5,36 @@ let randomBtn = document.getElementById("randomBtn");
 
 randomBtn.addEventListener("click", () => {
     let NumCard = randomNum();
-    let ColCard = randomColor();
-    for (let i = 0; i < number.length; i++) {
-        number[i].textContent = NumCard;
+    // let ColCard = randomColor();
+    if (NumCard <= 10) {
+        cardNum(NumCard);
     }
-    if (ColCard === 1) {
-        for (let i = 0; i < number.length; i++) {
-            number[i].classList.remove("colorRed");
-        }    
+    else if (NumCard === "11") {
+        cardNum("J");
     }
+    else if (NumCard === "12") {
+        cardNum("Q")
+    }
+    else if (NumCard === "13") {
+        cardNum("K")
+    }
+    else {
+        cardNum("A")
+    }
+
+    // if (ColCard === 1) {
+    //     for (let i = 0; i < number.length; i++) {
+    //         number[i].classList.remove("colorRed");
+    //     }    
+    // }
 });
+
+
+function cardNum(symbol) {
+    for (let i = 0; i < number.length; i++) {
+        number[i].textContent = symbol;
+    }
+}
 
 function randomNum() {
     let indexNum = Math.floor((Math.random()*(14-1)) + 1);
