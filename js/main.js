@@ -5,6 +5,7 @@ let randomBtn = document.getElementById("randomBtn");
 
 randomBtn.addEventListener("click", () => {
     let NumCard = randomNum();
+    let ColCard = randomColor();
     if (NumCard <= 10) {
         cardNum(NumCard);
     }
@@ -21,29 +22,18 @@ randomBtn.addEventListener("click", () => {
         cardNum("A")
     }
 
-    // if (ColCard === 1) {
-    //     for (let i = 0; i < number.length; i++) {
-    //         number[i].className.remove("colorRed");
-    //         number[i].className.add("colorBlack");
-    //     }    
-    // } else {
-    //     for (let i = 0; i < number.length; i++) {
-    //         number[i].classList.remove("colorBlack");
-    //         number[i].classList.add("colorRed");
-    //     }
-    // }
+    if (ColCard === "1") {
+        ColorTo("colorRed", "colorBlack", number);
+        ColorTo("colorRedBG", "colorBlackBG", symbol);
+        ColorTo("colorRedBG", "colorBlackBG", symbolMain);
+    }
+    else {
+        ColorTo("colorBlack", "colorRed", number);
+        ColorTo("colorBlackBG", "colorRedBG", symbol);
+        ColorTo("colorBlackBG", "colorRedBG", symbolMain); 
+    }
 });
 
-let numberCol = document.querySelectorAll(".number");
-numberCol.forEach(e => {
-    randomBtn.addEventListener("click", () => {
-        let ColCard = randomColor();
-        if (ColCard === 1) {
-            e.classList.remove("colorRed");
-            e.classList.add("colorBlack");
-        }
-    });
-});
 
 
 function cardNum(symbol) {
@@ -71,4 +61,11 @@ function randomColor() {
     console.log(indexCol);
     let text = indexCol.toString();
     return text;
+}
+
+function ColorTo(color1, color2, object) {
+    for (let i = 0; i < object.length; i++) {
+        object[i].classList.remove(color1);
+        object[i].classList.add(color2);
+    } 
 }
