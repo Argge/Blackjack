@@ -5,7 +5,6 @@ let randomBtn = document.getElementById("randomBtn");
 
 randomBtn.addEventListener("click", () => {
     let NumCard = randomNum();
-    // let ColCard = randomColor();
     if (NumCard <= 10) {
         cardNum(NumCard);
     }
@@ -24,9 +23,26 @@ randomBtn.addEventListener("click", () => {
 
     // if (ColCard === 1) {
     //     for (let i = 0; i < number.length; i++) {
-    //         number[i].classList.remove("colorRed");
+    //         number[i].className.remove("colorRed");
+    //         number[i].className.add("colorBlack");
     //     }    
+    // } else {
+    //     for (let i = 0; i < number.length; i++) {
+    //         number[i].classList.remove("colorBlack");
+    //         number[i].classList.add("colorRed");
+    //     }
     // }
+});
+
+let numberCol = document.querySelectorAll(".number");
+numberCol.forEach(e => {
+    randomBtn.addEventListener("click", () => {
+        let ColCard = randomColor();
+        if (ColCard === 1) {
+            e.classList.remove("colorRed");
+            e.classList.add("colorBlack");
+        }
+    });
 });
 
 
