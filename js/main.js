@@ -4,6 +4,49 @@ let symbolMain = document.getElementsByClassName("symbolMain");
 let randomBtn = document.getElementById("randomBtn");
 
 randomBtn.addEventListener("click", () => {
+
+    let contentDiv = document.getElementById("content");
+    let cardDiv = document.createElement("div");
+    cardDiv.classList.add("card");
+    contentDiv.appendChild(cardDiv);
+
+    let topDiv = document.createElement("div");
+    topDiv.classList.add("top");
+    cardDiv.appendChild(topDiv);
+    let NumSym1 = createNumSym();
+    topDiv.appendChild(NumSym1);
+
+    cardDiv.appendChild(createSymMain());
+
+    let bottomDiv = document.createElement("div");
+    bottomDiv.classList.add("bottom");
+    cardDiv.appendChild(bottomDiv);
+    let NumSym2 = createNumSym();
+    bottomDiv.appendChild(NumSym2);
+
+    // cardContentGenerate();
+});
+
+
+
+
+function createNumSym() {
+    let number = document.createElement("p");
+    number.classList.add("number", "colorRed");
+    number.textContent = "A";
+
+    let symbol = document.createElement("p")
+    symbol.classList.add("symbol", "colorRed")
+    number.textContent = "A";
+}
+
+function createSymMain() {
+    let symbolMain = document.createElement("p");
+    symbolMain.classList.add("symbolMain", "colorRed");
+    numberMain.textContent = "A";
+}
+
+function cardContentGenerate() {
     let NumCard = randomNumber();
     let ColCard = randomColor();
     let SymCard = randomSymbol();
@@ -54,11 +97,9 @@ randomBtn.addEventListener("click", () => {
         ColorTo("colorBlack", "colorRed", symbol);
         ColorTo("colorBlack", "colorRed", symbolMain);
     }
+}
 
-});
-
-
-
+// Functions for generating content of card
 function cardNum(symbol) {
     for (let i = 0; i < number.length; i++) {
         number[i].textContent = symbol;
