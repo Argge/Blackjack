@@ -1,6 +1,3 @@
-let number = document.getElementsByClassName("number");
-let symbol = document.getElementsByClassName("symbol");
-let symbolMain = document.getElementsByClassName("symbolMain");
 let randomBtn = document.getElementById("randomBtn");
 
 randomBtn.addEventListener("click", () => {
@@ -13,17 +10,34 @@ randomBtn.addEventListener("click", () => {
     let topDiv = document.createElement("div");
     topDiv.classList.add("top");
     cardDiv.appendChild(topDiv);
-    let NumSym1 = createNumSym();
-    topDiv.appendChild(NumSym1);
 
-    cardDiv.appendChild(createSymMain());
+    let number1 = document.createElement("p");
+    number1.classList.add("number", "colorRed");
+    number1.textContent = "A";
+    let symbol1 = document.createElement("p")
+    symbol1.classList.add("symbol", "colorRed")
+    symbol1.textContent = "♦";
+    topDiv.appendChild(number1);
+    topDiv.appendChild(symbol1);
+
+
+    let symbolMain = document.createElement("p");
+    symbolMain.classList.add("symbolMain", "colorRed");
+    numberMain.textContent = "A";
+    cardDiv.appendChild(symbolMain);
 
     let bottomDiv = document.createElement("div");
     bottomDiv.classList.add("bottom");
     cardDiv.appendChild(bottomDiv);
-    let NumSym2 = createNumSym();
-    bottomDiv.appendChild(NumSym2);
 
+    let number2 = document.createElement("p");
+    number2.classList.add("number", "colorRed");
+    number2.textContent = "A"
+    let symbol2 = document.createElement("p")
+    symbol2.classList.add("symbol", "colorRed")
+    symbol2.textContent = "♦";
+    bottomDiv.appendChild(number2);
+    bottomDiv.appendChild(symbol2);
     // cardContentGenerate();
 });
 
@@ -37,7 +51,7 @@ function createNumSym() {
 
     let symbol = document.createElement("p")
     symbol.classList.add("symbol", "colorRed")
-    number.textContent = "A";
+    symbol.textContent = "A";
 }
 
 function createSymMain() {
@@ -47,6 +61,11 @@ function createSymMain() {
 }
 
 function cardContentGenerate() {
+
+    let number = document.getElementsByClassName("number");
+    let symbol = document.getElementsByClassName("symbol");
+    let symbolMain = document.getElementsByClassName("symbolMain");
+
     let NumCard = randomNumber();
     let ColCard = randomColor();
     let SymCard = randomSymbol();
