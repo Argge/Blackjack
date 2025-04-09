@@ -1,19 +1,22 @@
 let randomBtn = document.getElementById("randomBtn");
+
 let numberCard = null;
 let symbolCard = null;
+let symbolMain = null;
 
 randomBtn.addEventListener("click", () => {
-    cardContentGenerateMain();
+    cardContentGenerateMain(); 
 });
 
 
 
 
 function cardContentGenerateMain() {
-    cardCreatingElements(defineNumber, defineColor, defineSymbol);
+    cardCreatingElements(defineNumber(), defineSymbol(), defineColor());
+    console.log(symbolCard)
 }
 
-function cardCreatingElements(number, color, symbol) {
+function cardCreatingElements(number, symbol, color) {
     // Creating BG of card
     let contentDiv = document.getElementById("content");
     let cardDiv = document.createElement("div");
@@ -26,13 +29,15 @@ function cardCreatingElements(number, color, symbol) {
     topDiv.classList.add("top");
     cardDiv.appendChild(topDiv);
 
-    createNumSym(number, color, symbol);
+    createNumSym(number, symbol);
+    numberCard.classList.add(color);
     topDiv.appendChild(numberCard);
     topDiv.appendChild(symbolCard);
 
 
     // Creating main symbol
-    createSymMain(symbol, color);
+    createSymMain(symbol);
+    symbolMain.classList.add(color);
     cardDiv.appendChild(symbolMain);
 
 
@@ -41,25 +46,26 @@ function cardCreatingElements(number, color, symbol) {
     bottomDiv.classList.add("bottom");
     cardDiv.appendChild(bottomDiv);
 
-    createNumSym(number, color, symbol);
+    createNumSym(number, symbol);
+    numberCard.classList.add(color);
     bottomDiv.appendChild(numberCard);
     bottomDiv.appendChild(symbolCard);
 }
 
-function createNumSym(number, color, symbol) {
+function createNumSym(number, symbol) {
     numberCard = document.createElement("p");
-    numberCard.classList.add(number, color);
+    numberCard.classList.add("number");
     numberCard.textContent = number;
 
     symbolCard = document.createElement("p")
-    symbolCard.classList.add(symbol, color)
+    symbolCard.classList.add("symbol")
     symbolCard.textContent = symbol;
 }
 
-function createSymMain(symbol, color) {
-    let symbolMain = document.createElement("p");
-    symbolMain.classList.add(symbol, color);
-    numberMain.textContent = symbol;
+function createSymMain(symbol) {
+    symbolMain = document.createElement("p");
+    symbolMain.classList.add("symbolMain");
+    symbolMain.textContent = symbol;
 }
 
 // Functions for generating content of card
@@ -109,37 +115,37 @@ function SymbolsJQKA(symbol, object) {
 }
 
 
-// define functions: Number, Symbol, Color
+// Define functions: Number, Symbol, Color
 function defineNumber() {
     let NumCard = randomNumber();
     let numberCard = null;
     
     if (NumCard <= 10) {
-        if (SymCard === 1) {
+        if (NumCard === 1) {
             numberCard = "1";
         }
-        else if (SymCard === 2) {
+        else if (NumCard === 2) {
             numberCard = "2";
         }
-        else if (SymCard === 3) {
+        else if (NumCard === 3) {
             numberCard = "3";
         }
-        else if (SymCard === 4) {
+        else if (NumCard === 4) {
             numberCard = "4";
         }
-        else if (SymCard === 5) {
+        else if (NumCard === 5) {
             numberCard = "5";
         }
-        else if (SymCard === 6) {
+        else if (NumCard === 6) {
             numberCard = "6";
         }
-        else if (SymCard === 7) {
+        else if (NumCard === 7) {
             numberCard = "7";
         }
-        else if (SymCard === 8) {
+        else if (NumCard === 8) {
             numberCard = "8";
         }
-        else if (SymCard === 9) {
+        else if (NumCard === 9) {
             numberCard = "9";
         }
         else {
@@ -163,10 +169,10 @@ function defineNumber() {
 }
 
 function defineSymbol() {
+    
     let SymCard = randomSymbol();
-    let symbolCard = null;
+    symbolCard = null;
 
-    if (NumCard <= 10) {
         if (SymCard === 1) {
             symbolCard = "♠";
         }
@@ -179,31 +185,31 @@ function defineSymbol() {
         else {
             symbolCard = "♦";
         }
-    }
-    else if (NumCard === 11) {
-        symbolCard = "J";
-    }
-    else if (NumCard === 12) {
-        symbolCard = "Q";
-    }
-    else if (NumCard === 13) {
-        symbolCard = "K";
-    }
-    else {
-        symbolCard = "A";
-    }
 
     return symbolCard;
 }
 
 function defineColor() {
-    let ColCard = randomColor();
+    // let ColCard = randomColor();
+    // let colorCard = null;
+
+    // if (ColCard === 1) {
+    //     colorCard = "colorBlack";
+    // }
+    // else {
+    //     colorCard = "colorRed";
+    // }
+
+    // return colorCard;
+
     let colorCard = null;
 
-    if (ColCard === 1) {
+    if (symbolCard === "♠" || symbolCard === "♣") {
         colorCard = "colorBlack";
     }
     else {
         colorCard = "colorRed";
     }
+
+    return colorCard;
 }
