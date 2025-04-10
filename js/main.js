@@ -1,4 +1,5 @@
-let randomBtn = document.getElementById("randomBtn");
+// let randomBtn = document.getElementById("randomBtn");
+const randomBtn = document.getElementById("randomBtnCard")
 
 let numberCard = null;
 let symbolCard = null;
@@ -9,11 +10,8 @@ randomBtn.addEventListener("click", () => {
 });
 
 
-
-
 function cardContentGenerateMain() {
     cardCreatingElements(defineNumber(), defineSymbol(), defineColor());
-    console.log(symbolCard)
 }
 
 function cardCreatingElements(number, symbol, color) {
@@ -31,6 +29,7 @@ function cardCreatingElements(number, symbol, color) {
 
     createNumSym(number, symbol);
     numberCard.classList.add(color);
+    symbolCard.classList.add(color);
     topDiv.appendChild(numberCard);
     topDiv.appendChild(symbolCard);
 
@@ -48,6 +47,7 @@ function cardCreatingElements(number, symbol, color) {
 
     createNumSym(number, symbol);
     numberCard.classList.add(color);
+    symbolCard.classList.add(color);
     bottomDiv.appendChild(numberCard);
     bottomDiv.appendChild(symbolCard);
 }
@@ -69,62 +69,30 @@ function createSymMain(symbol) {
 }
 
 // Functions for generating content of card
-function cardNum(symbol) {
-    for (let i = 0; i < number.length; i++) {
-        number[i].textContent = symbol;
-    }
-}
-
 function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(14-1)) + 1);
+    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
     console.log(indexNum);
     return indexNum;
 }
 
 function randomSymbol() {
-    let indexSym = Math.floor((Math.random()*(4-1)) + 1);
+    let indexSym = Math.floor((Math.random()*(5-1)) + 1);
     console.log(indexSym);
-    // let text = indexSym.toString();
     return indexSym;
 }
 
 function randomColor() {
     let indexCol = Math.floor((Math.random()*(3-1)) + 1);
     console.log(indexCol);
-    // let text = indexCol.toString();
     return indexCol;
 }
-
-function ColorTo(color1, color2, object) {
-    for (let i = 0; i < object.length; i++) {
-        object[i].classList.remove(color1);
-        object[i].classList.add(color2);
-    } 
-}
-
-function SymbolTo(symbol, object) {
-    for (let i = 0; i < object.length; i++) {
-        object[i].textContent = symbol;
-    }
-}
-
-function SymbolsJQKA(symbol, object) {
-     for (let i = 0; i < object.length; i++) {
-        object[i].textContent = symbol;
-    }
-}
-
 
 // Define functions: Number, Symbol, Color
 function defineNumber() {
     let NumCard = randomNumber();
-    let numberCard = null;
     
     if (NumCard <= 10) {
-        if (NumCard === 1) {
-            numberCard = "1";
-        }
-        else if (NumCard === 2) {
+        if (NumCard === 2) {
             numberCard = "2";
         }
         else if (NumCard === 3) {
@@ -171,7 +139,6 @@ function defineNumber() {
 function defineSymbol() {
     
     let SymCard = randomSymbol();
-    symbolCard = null;
 
         if (SymCard === 1) {
             symbolCard = "♠";
@@ -190,20 +157,6 @@ function defineSymbol() {
 }
 
 function defineColor() {
-    // let ColCard = randomColor();
-    // let colorCard = null;
-
-    // if (ColCard === 1) {
-    //     colorCard = "colorBlack";
-    // }
-    // else {
-    //     colorCard = "colorRed";
-    // }
-
-    // return colorCard;
-
-    let colorCard = null;
-
     if (symbolCard === "♠" || symbolCard === "♣") {
         colorCard = "colorBlack";
     }
