@@ -5,8 +5,21 @@ let numberCard = null;
 let symbolCard = null;
 let symbolMain = null;
 
+let value = 0;
+const amountCards = [];
+
 randomBtn.addEventListener("click", () => {
-    cardContentGenerateMain(); 
+    amountCards.push(cardContentGenerateMain());
+        
+        if (value === 21) {
+            alert("You win");
+        }
+        else if (value > 21) {
+            alert("You loose");
+        }
+        else {}
+        
+    console.log(value);
 });
 
 
@@ -50,6 +63,7 @@ function cardCreatingElements(number, symbol, color) {
     symbolCard.classList.add(color);
     bottomDiv.appendChild(numberCard);
     bottomDiv.appendChild(symbolCard);
+
 }
 
 function createNumSym(number, symbol) {
@@ -131,6 +145,19 @@ function defineNumber() {
     }
     else {
         numberCard = "A";
+    }
+
+    if (NumCard <= 10) {
+        value += NumCard;
+    }
+    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
+        value += 10;
+    }
+    else if (NumCard === 14 && amountCards.length < 3) {
+        value += 11;
+    }
+    else {
+        value += 1;
     }
 
     return numberCard;
