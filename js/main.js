@@ -8,14 +8,21 @@ let symbolMain = null;
 let value = 0;
 const amountCards = [];
 
+let playerPoints = 0;
+let dealerPoints = 0;
+let playerWins = 0;
+let cardsInDeck = 52;
+
 randomBtn.addEventListener("click", () => {
     amountCards.push(cardContentGenerateMain());
         
         if (value === 21) {
-            alert("You win");
+            // alert("You win");
+            createModalWin("You win!");
         }
         else if (value > 21) {
-            alert("You loose");
+            // alert("You loose");
+            createModalWin("You loose");
         }
         else {}
         
@@ -64,6 +71,20 @@ function cardCreatingElements(number, symbol, color) {
     bottomDiv.appendChild(numberCard);
     bottomDiv.appendChild(symbolCard);
 
+}
+
+function createModalWin(text) {
+    let guiDiv = document.getElementById("gui");
+    let modal = document.createElement("div");
+    modal.classList.add("modalWin");
+    guiDiv.appendChild(modal);
+
+    let paragraph = document.createElement("p");
+    paragraph.textContent = text;
+
+    let resetBtn = document.createElement("button");
+    resetBtn.classList.add("resetBtn");
+    resetBtn.value = "Contine";
 }
 
 function createNumSym(number, symbol) {
