@@ -1,5 +1,4 @@
-// let randomBtn = document.getElementById("randomBtn");
-const randomBtn = document.getElementById("randomBtnCard")
+const randomBtn = document.getElementById("randomBtnCard");
 
 let numberCard = null;
 let symbolCard = null;
@@ -14,22 +13,78 @@ let playerWins = 0;
 let cardsInDeck = 52;
 
 randomBtn.addEventListener("click", () => {
+    const content = document.getElementById("content");
     amountCards.push(cardContentGenerateMain());
+    
+    cardsInDeck--;
+    let deckCardsCounter = document.getElementById("deckCardsCounter");
+    deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
+
         
-        if (value === 21) {
-            // alert("You win");
-            createModalWin("You win!");
+    if (value === 21) {
+        randomBtn.disabled = true;
+        playerPoints += value;
+        modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
+    }
+    else if (value > 21) {
+        randomBtn.disabled = true;
+        dealerPoints += value;
+        modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
+    }
+    else {}
+     
+    if (cardsInDeck === 0) {
+        if (playerPoints > dealerPoints) {
+            playerWins++;
+            modalWinFinalClose("You win game!");
         }
-        else if (value > 21) {
-            // alert("You loose");
-            createModalWin("You loose");
+        else {
+            modalWinFinalClose("You loose game!");
         }
-        else {}
-        
-    console.log(value);
+    }
+    console.log("Now: " + value);
 });
 
 
+
+function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
+    createModalWin(text);
+    console.log("After: " + value);
+    value = 0;
+    
+    const resetBtn = document.getElementById("resetBtn");
+    const modalWin = document.getElementById("modalWin");
+
+    resetBtn.addEventListener("click", () => {
+        let counter = document.getElementById(id);
+        counter.textContent = counterPlayerDealer + pointsPlayerDealer;
+        content.innerHTML = "";
+        modalWin.remove();
+        randomBtn.disabled = false;
+    });
+}
+
+function modalWinFinalClose(looseOrWin) {
+    createModalWin(looseOrWin);
+            const resetBtn = document.getElementById("resetBtn");
+            const modalWin = document.getElementById("modalWin");
+            
+            resetBtn.addEventListener("click", () => {
+                let playerPointsCounter = document.getElementById("playerPointsCounter");
+                let dealerPointsCounter = document.getElementById("dealerPointsCounter");
+                playerPointsCounter.textContent = "Player points: 0";
+                dealerPointsCounter.textContent = "Dealer points: 0";
+                playerWinsCounter.textContent = "Your wins: " + playerWins;
+                content.innerHTML = "";
+                modalWin.remove();
+
+                cardsInDeck = 52;
+                deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+            });
+}
+
+
+// Functions for creating something
 function cardContentGenerateMain() {
     cardCreatingElements(defineNumber(), defineSymbol(), defineColor());
 }
@@ -75,16 +130,19 @@ function cardCreatingElements(number, symbol, color) {
 
 function createModalWin(text) {
     let guiDiv = document.getElementById("gui");
-    let modal = document.createElement("div");
-    modal.classList.add("modalWin");
-    guiDiv.appendChild(modal);
+    let modalDiv = document.createElement("div");
+    modalDiv.classList.add("modalWin");
+    modalDiv.id = "modalWin";
+    guiDiv.appendChild(modalDiv);
 
     let paragraph = document.createElement("p");
     paragraph.textContent = text;
+    modalDiv.appendChild(paragraph);
 
     let resetBtn = document.createElement("button");
-    resetBtn.classList.add("resetBtn");
-    resetBtn.value = "Contine";
+    resetBtn.id = "resetBtn";
+    resetBtn.textContent = "Contine";
+    modalDiv.appendChild(resetBtn);
 }
 
 function createNumSym(number, symbol) {
@@ -180,6 +238,8 @@ function defineNumber() {
     else {
         value += 1;
     }
+
+    // playerPoints = value;
 
     return numberCard;
 }

@@ -16,3 +16,6 @@
 - Counter of player wins
 - Counter of player points 
 - Counter of dealer points
+
+
+Обмеження на кількість карт у колоді: по 4 масті кожного символу

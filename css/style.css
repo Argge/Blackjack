@@ -146,7 +146,7 @@ body {
 /* MODAL WINDOW */
 
 .modalWin {
-    position: absolute;
+    /* position: absolute; */
     width: 200px;
     height: 150px;
     background-color: #1d1d1d;
@@ -157,13 +157,20 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 20px;
+    gap: 20px;
 }
 
-.resetBtn {
+#resetBtn {
     width: 110px;
-    height: 70px;
-    background-color: #ff0000;
+    height: 30px;
+    background-color: #505050;
     color: #fff;
+    border: 0;
+    border-radius: 15px;
+}
+
+#resetBtn:hover {
+    background-color: #5d5d5d;
 }
 
 /* MODAL WINDOW */
