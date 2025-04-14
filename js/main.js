@@ -1,4 +1,14 @@
-const randomBtn = document.getElementById("randomBtnCard");
+const hitBtn = document.getElementById("hitBtn");
+
+const coinBtn1 = document.getElementById("coin1");
+const coinBtn5 = document.getElementById("coin5");
+const coinBtn25 = document.getElementById("coin25");
+const coinBtn50 = document.getElementById("coin50");
+const coinBtn100 = document.getElementById("coin100");
+const coinBtn500 = document.getElementById("coin500");
+
+let playerBankCounter = document.getElementById("playerBankCounter");
+let gameBankCounter = document.getElementById("gameBankCounter");
 
 let numberCard = null;
 let symbolCard = null;
@@ -11,12 +21,24 @@ let playerPoints = 0;
 let dealerPoints = 0;
 let playerWins = 0;
 let cardsInDeck = 52;
+let playerBank = 100;
+let gameBank = 0;
 
-randomBtn.addEventListener("click", () => {
+hitBtn.addEventListener("click", () => {
 
     if (amountCards.length < 1) {
         amountCards.push(cardContentGenerateMain());
         amountCards.push(cardContentGenerateMain());
+        if (value === 21) {
+            hitBtn.disabled = true;
+            playerPoints += value;
+            playerWins++;
+            gameBank *= 2.5;
+            playerBank += gameBank;
+            playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+            gameBankCounter.textContent = "Game bank: 0$";
+            modalWinClose("Blackjack!", "playerPointsCounter", "Your points: ", playerPoints);
+        }
     }
     else {
         const content = document.getElementById("content");
@@ -28,14 +50,19 @@ randomBtn.addEventListener("click", () => {
 
             
         if (value === 21) {
-            randomBtn.disabled = true;
+            hitBtn.disabled = true;
             playerPoints += value;
             playerWins++;
+            gameBank *= 2;
+            playerBank += gameBank;
+            playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+            gameBankCounter.textContent = "Game bank: 0$";
             modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
         }
         else if (value > 21) {
-            randomBtn.disabled = true;
+            hitBtn.disabled = true;
             dealerPoints += value;
+            gameBankCounter.textContent = "Game bank: 0$";
             modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
         }
         else {}
@@ -54,7 +81,96 @@ randomBtn.addEventListener("click", () => {
 });
 
 
+
+// Coin buttons
+coinBtn1.addEventListener("click", () => {
+    if (playerBank >= 1) {
+        playerBank--;
+        gameBank++;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+});
+
+coinBtn5.addEventListener("click", () => {
+    if (playerBank >= 5) {
+        playerBank -= 5;
+        gameBank += 5;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+});
+
+coinBtn25.addEventListener("click", () => {
+    if (playerBank >= 25) {
+        playerBank -= 25;
+        gameBank += 25;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+});
+
+coinBtn50.addEventListener("click", () => {
+    if (playerBank >= 50) {
+        playerBank -= 50;
+        gameBank += 50;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+});
+
+coinBtn100.addEventListener("click", () => {
+    if (playerBank >= 100) {
+        playerBank -= 100;
+        gameBank += 100;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+});
+
+coinBtn500.addEventListener("click", () => {
+    if (playerBank >= 500) {
+        playerBank -= 500;
+        gameBank += 500;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+});
+
+
+
 // Functions for modal window
+function modalTypeText(text) {
+    createModalWin(text);
+    const resetBtn = document.getElementById("resetBtn");
+    const modalWin = document.getElementById("modalWin");
+    const modalGuiWin = document.getElementById("modalGuiWin");
+
+    resetBtn.addEventListener("click", () => {
+        modalWin.remove();
+        modalGuiWin.remove();
+        hitBtn.disabled = false;
+    });
+}
+
 function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
     createModalWin(text);
     console.log("After: " + value);
@@ -71,8 +187,9 @@ function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
         content.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
-        randomBtn.disabled = false;
+        hitBtn.disabled = false;
         amountCards = [];
+        gameBank = 0;
     });
 }
 

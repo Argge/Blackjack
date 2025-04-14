@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Casino</title>
+    <title>Blackjack</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -11,17 +11,18 @@
         <div class="guiBottom">
             <div id="headerBottom">
                 <div id="money">
-                    <button class="moneyBtn"></button>
-                    <button class="moneyBtn"></button>
-                    <button class="moneyBtn"></button>
-                    <button class="moneyBtn"></button>
-                    <button class="moneyBtn"></button>
+                    <button class="coinBtn" id="coin1">1</button>
+                    <button class="coinBtn" id="coin5">5</button>
+                    <button class="coinBtn" id="coin25">25</button>
+                    <button class="coinBtn" id="coin50">50</button>
+                    <button class="coinBtn" id="coin100">100</button>
+                    <button class="coinBtn" id="coin500">500</button>
                 </div>
                 <div id="mainButtons">
-                    <button class="mainBtn" id="hitBtn">Hit</button>
-                    <button class="mainBtn" id="splitBtn">Split</button>
-                    <button class="mainBtn" id="DoubleBtn">Double & Deal</button>
-                    <button class="mainBtn" id="PassBtn">Pass</button>
+                    <button class="mainBtn" id="hitBtn">HIT</button>
+                    <button class="mainBtn" id="splitBtn">SPLIT</button>
+                    <button class="mainBtn" id="doubleBtn">DEAL</button>
+                    <button class="mainBtn" id="standBtn">STAND</button>
                 </div>
             </div>
         </div>
@@ -30,6 +31,8 @@
                 <p id="playerPointsCounter">Your points: 0</p>
                 <p id="dealerPointsCounter">Dealer points: 0</p>
                 <p id="playerWinsCounter">Your wins: 0</p>
+                <p id="playerBankCounter">Your bank: 100$</p>
+                <p id="gameBankCounter">Game bank: 0$</p>
             </div>
             <p id="deckCardsCounter">Cards in deck: 52</p>
         </div>
