@@ -1,4 +1,5 @@
 const hitBtn = document.getElementById("hitBtn");
+const standBtn = document.getElementById("standBtn");
 
 const coinBtn1 = document.getElementById("coin1");
 const coinBtn5 = document.getElementById("coin5");
@@ -15,6 +16,7 @@ let symbolCard = null;
 let symbolMain = null;
 
 let value = 0;
+let valueDealer = 0;
 let amountCards = [];
 let amountCardsDealer = [];
 
@@ -29,12 +31,16 @@ hitBtn.addEventListener("click", () => {
 
     if (gameBank === 0) {
         hitBtn.disabled = true;
-        modalTypeText("Did bet");
+        modalTypeText("Did a bet");
     }
     else {
         if (amountCards.length < 1) {
-            amountCards.push(cardContentGenerateMain("content"));
-            amountCards.push(cardContentGenerateMain("content"));
+
+            amountCards.push(cardContentGenerateMain(value, "content"));
+            amountCards.push(cardContentGenerateMain(value, "content"));
+            amountCardsDealer.push(cardContentGenerateMain(valueDealer, "contentDealer"));
+            amountCardsDealer.push(cardBackSideCreate(valueDealer, "contentDealer"));
+
             if (value === 21) {
                 hitBtn.disabled = true;
                 playerPoints += value;
@@ -49,7 +55,7 @@ hitBtn.addEventListener("click", () => {
         else {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
-            amountCards.push(cardContentGenerateMain("content"));
+            amountCards.push(cardContentGenerateMain(value, "content"));
             
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
@@ -82,17 +88,19 @@ hitBtn.addEventListener("click", () => {
                     modalWinFinalClose("You loose game!");
                 }
             }
-
-            amountCardsDealer.push(cardContentGenerateMain("contentDealer"));
         }
     
         console.log("Now: " + value);
     }
-
-    
 });
 
+standBtn.addEventListener("click", () => {
+    const contentDealer = document.getElementById("contentDealer");
+    contentDealer.lastChild.remove();
+    amountCardsDealer.push(cardContentGenerateMain("contentDealer"));
 
+
+});
 
 // Coin buttons
 coinBtn1.addEventListener("click", () => {
@@ -197,6 +205,7 @@ function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
         counter.textContent = counterPlayerDealer + pointsPlayerDealer;
         playerWinsCounter.textContent = "Your wins: " + playerWins;
         content.innerHTML = "";
+        contentDealer.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
         hitBtn.disabled = false;
@@ -228,11 +237,13 @@ function modalWinFinalClose(looseOrWin) {
 
 
 // Functions for creating something
-function cardContentGenerateMain(id) {
-    cardCreatingElements(id, defineNumber(), defineSymbol(), defineColor());
+function cardContentGenerateMain(value, id) {
+    cardCreatingElements(value, id, defineNumber(), defineSymbol(), defineColor());
 }
 
-function cardCreatingElements(id, number, symbol, color) {
+function cardCreatingElements(value, id, number, symbol, color) {
+    defineValue(value, number);
+
     // Creating BG of card
     let contentDiv = document.getElementById(id);
     let cardDiv = document.createElement("div");
@@ -270,6 +281,13 @@ function cardCreatingElements(id, number, symbol, color) {
     bottomDiv.appendChild(symbolCard);
 
 }
+
+function cardBackSideCreate(id) {
+    let contentDiv = document.getElementById(id);
+    let cardDiv = document.createElement("div");
+    cardDiv.classList.add("cardBack");
+    contentDiv.appendChild(cardDiv);
+} 
 
 function createModalWin(text) {
     const mainDiv = document.getElementById("main");
@@ -373,18 +391,18 @@ function defineNumber() {
         numberCard = "A";
     }
 
-    if (NumCard <= 10) {
-        value += NumCard;
-    }
-    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        value += 10;
-    }
-    else if (NumCard === 14 && amountCards.length < 3) {
-        value += 11;
-    }
-    else {
-        value += 1;
-    }
+    // if (NumCard <= 10) {
+    //     value += NumCard;
+    // }
+    // else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
+    //     value += 10;
+    // }
+    // else if (NumCard === 14 && amountCards.length < 3) {
+    //     value += 11;
+    // }
+    // else {
+    //     value += 1;
+    // }
 
     // playerPoints = value;
 
@@ -420,4 +438,52 @@ function defineColor() {
     }
 
     return colorCard;
+}
+
+function defineValue(value, number) {
+    if (number === "1") {
+        value++;
+    }
+    else if (number === "2") {
+        value += 2;
+    }
+    else if (number === "3") {
+        value += 3;
+    }
+    else if (number === "4") {
+        value += 4;
+    }
+    else if (number === "5") {
+        value += 5;
+    }
+    else if (number === "6") {
+        value += 6;
+    }
+    else if (number === "7") {
+        value += 7;
+    }
+    else if (number === "8") {
+        value += 8;
+    }
+    else if (number === "9") {
+        value += 9;
+    }
+    else if (number === "10") {
+        value += 10;
+    }
+    else if (number === "J") {
+        value += 10;
+    }
+    else if (number === "Q") {
+        value += 10;
+    }
+    else if (number === "K") {
+        value += 10;
+    }
+    else if (number === "A" && amountCards.length < 3) {
+        value += 11;
+    }
+    else {
+        value++;
+    }
 }
