@@ -5,7 +5,7 @@ let symbolCard = null;
 let symbolMain = null;
 
 let value = 0;
-const amountCards = [];
+let amountCards = [];
 
 let playerPoints = 0;
 let dealerPoints = 0;
@@ -13,40 +13,48 @@ let playerWins = 0;
 let cardsInDeck = 52;
 
 randomBtn.addEventListener("click", () => {
-    const content = document.getElementById("content");
-    amountCards.push(cardContentGenerateMain());
-    
-    cardsInDeck--;
-    let deckCardsCounter = document.getElementById("deckCardsCounter");
-    deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
 
+    if (amountCards.length < 1) {
+        amountCards.push(cardContentGenerateMain());
+        amountCards.push(cardContentGenerateMain());
+    }
+    else {
+        const content = document.getElementById("content");
+        amountCards.push(cardContentGenerateMain());
         
-    if (value === 21) {
-        randomBtn.disabled = true;
-        playerPoints += value;
-        modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
-    }
-    else if (value > 21) {
-        randomBtn.disabled = true;
-        dealerPoints += value;
-        modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
-    }
-    else {}
-     
-    if (cardsInDeck === 0) {
-        if (playerPoints > dealerPoints) {
-            playerWins++;
-            modalWinFinalClose("You win game!");
+        cardsInDeck--;
+        let deckCardsCounter = document.getElementById("deckCardsCounter");
+        deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
+
+            
+        if (value === 21) {
+            randomBtn.disabled = true;
+            playerPoints += value;
+            modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
         }
-        else {
-            modalWinFinalClose("You loose game!");
+        else if (value > 21) {
+            randomBtn.disabled = true;
+            dealerPoints += value;
+            modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
+        }
+        else {}
+        
+        if (cardsInDeck === 0) {
+            if (playerPoints > dealerPoints) {
+                playerWins++;
+                modalWinFinalClose("You win game!");
+            }
+            else {
+                modalWinFinalClose("You loose game!");
+            }
         }
     }
+
     console.log("Now: " + value);
 });
 
 
-
+// Functions for modal window
 function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
     createModalWin(text);
     console.log("After: " + value);
@@ -60,7 +68,9 @@ function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
         counter.textContent = counterPlayerDealer + pointsPlayerDealer;
         content.innerHTML = "";
         modalWin.remove();
+        modalGuiWin.remove();
         randomBtn.disabled = false;
+        amountCards = [];
     });
 }
 
@@ -68,6 +78,7 @@ function modalWinFinalClose(looseOrWin) {
     createModalWin(looseOrWin);
             const resetBtn = document.getElementById("resetBtn");
             const modalWin = document.getElementById("modalWin");
+            const modalGuiWin = document.getElementById("modalGuiWin");
             
             resetBtn.addEventListener("click", () => {
                 let playerPointsCounter = document.getElementById("playerPointsCounter");
@@ -77,9 +88,11 @@ function modalWinFinalClose(looseOrWin) {
                 playerWinsCounter.textContent = "Your wins: " + playerWins;
                 content.innerHTML = "";
                 modalWin.remove();
+                modalGuiWin.remove();
 
                 cardsInDeck = 52;
                 deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+                amountCards = [];
             });
 }
 
@@ -129,11 +142,15 @@ function cardCreatingElements(number, symbol, color) {
 }
 
 function createModalWin(text) {
-    let guiDiv = document.getElementById("gui");
+    const mainDiv = document.getElementById("main");
+    let modalGuiDiv = document.createElement("div");
+    modalGuiDiv.id = "modalGuiWin";
+    mainDiv.appendChild(modalGuiDiv);
+    
     let modalDiv = document.createElement("div");
     modalDiv.classList.add("modalWin");
     modalDiv.id = "modalWin";
-    guiDiv.appendChild(modalDiv);
+    modalGuiDiv.appendChild(modalDiv);
 
     let paragraph = document.createElement("p");
     paragraph.textContent = text;

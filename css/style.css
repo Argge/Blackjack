@@ -7,6 +7,8 @@ body {
     width: 100%;
     height: 100vh;
     background-color: green;
+    background-image: url("../img/background.jpg");
+    background-size: cover;
 }
 
 .main {
@@ -37,13 +39,17 @@ body {
     color: #fff;
     font-size: 20px;
     gap: 30px;
-    margin-left: 20px;
 }
 
 .counters {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-left: 20px;
+}
+
+#deckCardsCounter {
+    margin-left: 20px;
 }
 /* GUI */
 
@@ -171,6 +177,16 @@ body {
 
 #resetBtn:hover {
     background-color: #5d5d5d;
+}
+
+#modalGuiWin {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* MODAL WINDOW */
