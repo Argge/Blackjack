@@ -30,6 +30,7 @@ randomBtn.addEventListener("click", () => {
         if (value === 21) {
             randomBtn.disabled = true;
             playerPoints += value;
+            playerWins++;
             modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
         }
         else if (value > 21) {
@@ -41,7 +42,6 @@ randomBtn.addEventListener("click", () => {
         
         if (cardsInDeck === 0) {
             if (playerPoints > dealerPoints) {
-                playerWins++;
                 modalWinFinalClose("You win game!");
             }
             else {
@@ -62,10 +62,12 @@ function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
     
     const resetBtn = document.getElementById("resetBtn");
     const modalWin = document.getElementById("modalWin");
+    const playerWinsCounter = document.getElementById("playerWinsCounter");
 
     resetBtn.addEventListener("click", () => {
         let counter = document.getElementById(id);
         counter.textContent = counterPlayerDealer + pointsPlayerDealer;
+        playerWinsCounter.textContent = "Your wins: " + playerWins;
         content.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
@@ -85,7 +87,6 @@ function modalWinFinalClose(looseOrWin) {
                 let dealerPointsCounter = document.getElementById("dealerPointsCounter");
                 playerPointsCounter.textContent = "Player points: 0";
                 dealerPointsCounter.textContent = "Dealer points: 0";
-                playerWinsCounter.textContent = "Your wins: " + playerWins;
                 content.innerHTML = "";
                 modalWin.remove();
                 modalGuiWin.remove();

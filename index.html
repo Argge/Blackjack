@@ -8,6 +8,23 @@
 </head>
 <body>
     <div class="main" id="main">
+        <div class="guiBottom">
+            <div id="headerBottom">
+                <div id="money">
+                    <button class="moneyBtn"></button>
+                    <button class="moneyBtn"></button>
+                    <button class="moneyBtn"></button>
+                    <button class="moneyBtn"></button>
+                    <button class="moneyBtn"></button>
+                </div>
+                <div id="mainButtons">
+                    <button class="mainBtn" id="hitBtn">Hit</button>
+                    <button class="mainBtn" id="splitBtn">Split</button>
+                    <button class="mainBtn" id="DoubleBtn">Double & Deal</button>
+                    <button class="mainBtn" id="PassBtn">Pass</button>
+                </div>
+            </div>
+        </div>
         <div class="gui" id="gui">
             <div class="counters">
                 <p id="playerPointsCounter">Your points: 0</p>
@@ -17,7 +34,9 @@
             <p id="deckCardsCounter">Cards in deck: 52</p>
         </div>
         <button class="randomBtnCard" id="randomBtnCard"></button>
-        <div class="content" id="content"></div>
+        <div class="cardsMain">
+            <div class="content" id="content"></div>
+        </div>
     </div>
 </body>
 <script src="js/main.js"></script>
