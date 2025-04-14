@@ -16,6 +16,7 @@ let symbolMain = null;
 
 let value = 0;
 let amountCards = [];
+let amountCardsDealer = [];
 
 let playerPoints = 0;
 let dealerPoints = 0;
@@ -26,58 +27,69 @@ let gameBank = 0;
 
 hitBtn.addEventListener("click", () => {
 
-    if (amountCards.length < 1) {
-        amountCards.push(cardContentGenerateMain());
-        amountCards.push(cardContentGenerateMain());
-        if (value === 21) {
-            hitBtn.disabled = true;
-            playerPoints += value;
-            playerWins++;
-            gameBank *= 2.5;
-            playerBank += gameBank;
-            playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-            gameBankCounter.textContent = "Game bank: 0$";
-            modalWinClose("Blackjack!", "playerPointsCounter", "Your points: ", playerPoints);
-        }
+    if (gameBank === 0) {
+        hitBtn.disabled = true;
+        modalTypeText("Did bet");
     }
     else {
-        const content = document.getElementById("content");
-        amountCards.push(cardContentGenerateMain());
-        
-        cardsInDeck--;
-        let deckCardsCounter = document.getElementById("deckCardsCounter");
-        deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
-
+        if (amountCards.length < 1) {
+            amountCards.push(cardContentGenerateMain("content"));
+            amountCards.push(cardContentGenerateMain("content"));
+            if (value === 21) {
+                hitBtn.disabled = true;
+                playerPoints += value;
+                playerWins++;
+                gameBank *= 2.5;
+                playerBank += gameBank;
+                playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+                gameBankCounter.textContent = "Game bank: 0$";
+                modalWinClose("Blackjack!", "playerPointsCounter", "Your points: ", playerPoints);
+            }
+        }
+        else {
+            const content = document.getElementById("content");
+            const contentDealer = document.getElementById("contentDealer")
+            amountCards.push(cardContentGenerateMain("content"));
             
-        if (value === 21) {
-            hitBtn.disabled = true;
-            playerPoints += value;
-            playerWins++;
-            gameBank *= 2;
-            playerBank += gameBank;
-            playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-            gameBankCounter.textContent = "Game bank: 0$";
-            modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
-        }
-        else if (value > 21) {
-            hitBtn.disabled = true;
-            dealerPoints += value;
-            gameBankCounter.textContent = "Game bank: 0$";
-            modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
-        }
-        else {}
-        
-        if (cardsInDeck === 0) {
-            if (playerPoints > dealerPoints) {
-                modalWinFinalClose("You win game!");
+            cardsInDeck--;
+            let deckCardsCounter = document.getElementById("deckCardsCounter");
+            deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
+    
+                
+            if (value === 21) {
+                hitBtn.disabled = true;
+                playerPoints += value;
+                playerWins++;
+                gameBank *= 2;
+                playerBank += gameBank;
+                playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+                gameBankCounter.textContent = "Game bank: 0$";
+                modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
             }
-            else {
-                modalWinFinalClose("You loose game!");
+            else if (value > 21) {
+                hitBtn.disabled = true;
+                dealerPoints += value;
+                gameBankCounter.textContent = "Game bank: 0$";
+                modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
             }
+            else {}
+            
+            if (cardsInDeck === 0) {
+                if (playerPoints > dealerPoints) {
+                    modalWinFinalClose("You win game!");
+                }
+                else {
+                    modalWinFinalClose("You loose game!");
+                }
+            }
+
+            amountCardsDealer.push(cardContentGenerateMain("contentDealer"));
         }
+    
+        console.log("Now: " + value);
     }
 
-    console.log("Now: " + value);
+    
 });
 
 
@@ -216,13 +228,13 @@ function modalWinFinalClose(looseOrWin) {
 
 
 // Functions for creating something
-function cardContentGenerateMain() {
-    cardCreatingElements(defineNumber(), defineSymbol(), defineColor());
+function cardContentGenerateMain(id) {
+    cardCreatingElements(id, defineNumber(), defineSymbol(), defineColor());
 }
 
-function cardCreatingElements(number, symbol, color) {
+function cardCreatingElements(id, number, symbol, color) {
     // Creating BG of card
-    let contentDiv = document.getElementById("content");
+    let contentDiv = document.getElementById(id);
     let cardDiv = document.createElement("div");
     cardDiv.classList.add("card");
     contentDiv.appendChild(cardDiv);
