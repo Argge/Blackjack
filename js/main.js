@@ -36,10 +36,10 @@ hitBtn.addEventListener("click", () => {
     else {
         if (amountCards.length < 1) {
 
-            amountCards.push(cardContentGenerateMain(value, "content"));
-            amountCards.push(cardContentGenerateMain(value, "content"));
-            amountCardsDealer.push(cardContentGenerateMain(valueDealer, "contentDealer"));
-            amountCardsDealer.push(cardBackSideCreate(valueDealer, "contentDealer"));
+            amountCards.push(cardContentGenerateMain(value, "content", defineNumber()));
+            amountCards.push(cardContentGenerateMain(value, "content", defineNumber()));
+            amountCardsDealer.push(cardContentGenerateMain(valueDealer, "contentDealer", defineNumber()));
+            amountCardsDealer.push(cardBackSideCreate("contentDealer"));
 
             if (value === 21) {
                 hitBtn.disabled = true;
@@ -55,7 +55,7 @@ hitBtn.addEventListener("click", () => {
         else {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
-            amountCards.push(cardContentGenerateMain(value, "content"));
+            amountCards.push(cardContentGenerateMain(value, "content", defineNumber()));
             
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
@@ -195,6 +195,7 @@ function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
     createModalWin(text);
     console.log("After: " + value);
     value = 0;
+    valueDealer = 0;
     
     const resetBtn = document.getElementById("resetBtn");
     const modalWin = document.getElementById("modalWin");
@@ -237,12 +238,12 @@ function modalWinFinalClose(looseOrWin) {
 
 
 // Functions for creating something
-function cardContentGenerateMain(value, id) {
-    cardCreatingElements(value, id, defineNumber(), defineSymbol(), defineColor());
+function cardContentGenerateMain(defineV, id, number) {
+    cardCreatingElements(id, number, defineSymbol(), defineColor());
+    defineValue(defineV, number);
 }
 
-function cardCreatingElements(value, id, number, symbol, color) {
-    defineValue(value, number);
+function cardCreatingElements(id, number, symbol, color) { 
 
     // Creating BG of card
     let contentDiv = document.getElementById(id);
@@ -329,19 +330,19 @@ function createSymMain(symbol) {
 // Functions for generating content of card
 function randomNumber() {
     let indexNum = Math.floor((Math.random()*(15-2)) + 2);
-    console.log(indexNum);
+    // console.log(indexNum);
     return indexNum;
 }
 
 function randomSymbol() {
     let indexSym = Math.floor((Math.random()*(5-1)) + 1);
-    console.log(indexSym);
+    // console.log(indexSym);
     return indexSym;
 }
 
 function randomColor() {
     let indexCol = Math.floor((Math.random()*(3-1)) + 1);
-    console.log(indexCol);
+    // console.log(indexCol);
     return indexCol;
 }
 
