@@ -36,10 +36,10 @@ hitBtn.addEventListener("click", () => {
     else {
         if (amountCards.length < 1) {
 
-            amountCards.push(cardContentGenerateMain(value, "content"));
-            amountCards.push(cardContentGenerateMain(value, "content"));
-            amountCardsDealer.push(cardContentGenerateMain(valueDealer, "contentDealer"));
-            amountCardsDealer.push(cardBackSideCreate(valueDealer, "contentDealer"));
+            amountCards.push(cardContentGenerateMain("content"));
+            amountCards.push(cardContentGenerateMain("content"));
+            amountCardsDealer.push(cardContentGenerateMain("contentDealer"));
+            amountCardsDealer.push(cardBackSideCreate("contentDealer"));
 
             if (value === 21) {
                 hitBtn.disabled = true;
@@ -55,7 +55,7 @@ hitBtn.addEventListener("click", () => {
         else {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
-            amountCards.push(cardContentGenerateMain(value, "content"));
+            amountCards.push(cardContentGenerateMain("content"));
             
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
@@ -238,11 +238,11 @@ function modalWinFinalClose(looseOrWin) {
 
 // Functions for creating something
 function cardContentGenerateMain(value, id) {
-    cardCreatingElements(value, id, defineNumber(), defineSymbol(), defineColor());
+    cardCreatingElements(id, defineNumber(), defineSymbol(), defineColor());
 }
 
-function cardCreatingElements(value, id, number, symbol, color) {
-    defineValue(value, number);
+function cardCreatingElements(id, number, symbol, color) {
+    // defineValue(value, number);
 
     // Creating BG of card
     let contentDiv = document.getElementById(id);
@@ -391,20 +391,20 @@ function defineNumber() {
         numberCard = "A";
     }
 
-    // if (NumCard <= 10) {
-    //     value += NumCard;
-    // }
-    // else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-    //     value += 10;
-    // }
-    // else if (NumCard === 14 && amountCards.length < 3) {
-    //     value += 11;
-    // }
-    // else {
-    //     value += 1;
-    // }
+    if (NumCard <= 10) {
+        value += NumCard;
+    }
+    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
+        value += 10;
+    }
+    else if (NumCard === 14 && amountCards.length < 3) {
+        value += 11;
+    }
+    else {
+        value += 1;
+    }
 
-    // playerPoints = value;
+    playerPoints = value;
 
     return numberCard;
 }
@@ -440,50 +440,50 @@ function defineColor() {
     return colorCard;
 }
 
-function defineValue(value, number) {
-    if (number === "1") {
-        value++;
-    }
-    else if (number === "2") {
-        value += 2;
-    }
-    else if (number === "3") {
-        value += 3;
-    }
-    else if (number === "4") {
-        value += 4;
-    }
-    else if (number === "5") {
-        value += 5;
-    }
-    else if (number === "6") {
-        value += 6;
-    }
-    else if (number === "7") {
-        value += 7;
-    }
-    else if (number === "8") {
-        value += 8;
-    }
-    else if (number === "9") {
-        value += 9;
-    }
-    else if (number === "10") {
-        value += 10;
-    }
-    else if (number === "J") {
-        value += 10;
-    }
-    else if (number === "Q") {
-        value += 10;
-    }
-    else if (number === "K") {
-        value += 10;
-    }
-    else if (number === "A" && amountCards.length < 3) {
-        value += 11;
-    }
-    else {
-        value++;
-    }
-}
+// function defineValue(value, number) {
+//     if (number === "1") {
+//         value++;
+//     }
+//     else if (number === "2") {
+//         value += 2;
+//     }
+//     else if (number === "3") {
+//         value += 3;
+//     }
+//     else if (number === "4") {
+//         value += 4;
+//     }
+//     else if (number === "5") {
+//         value += 5;
+//     }
+//     else if (number === "6") {
+//         value += 6;
+//     }
+//     else if (number === "7") {
+//         value += 7;
+//     }
+//     else if (number === "8") {
+//         value += 8;
+//     }
+//     else if (number === "9") {
+//         value += 9;
+//     }
+//     else if (number === "10") {
+//         value += 10;
+//     }
+//     else if (number === "J") {
+//         value += 10;
+//     }
+//     else if (number === "Q") {
+//         value += 10;
+//     }
+//     else if (number === "K") {
+//         value += 10;
+//     }
+//     else if (number === "A" && amountCards.length < 3) {
+//         value += 11;
+//     }
+//     else {
+//         value++;
+//     }
+// }
