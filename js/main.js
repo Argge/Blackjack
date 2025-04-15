@@ -36,10 +36,12 @@ hitBtn.addEventListener("click", () => {
     else {
         if (amountCards.length < 1) {
 
-            amountCards.push(cardContentGenerateMain("content"));
-            amountCards.push(cardContentGenerateMain("content"));
-            amountCardsDealer.push(cardContentGenerateMain("contentDealer"));
+            amountCards.push(cardPlayer());
+            amountCards.push(cardPlayer());
+            amountCardsDealer.push(cardDealer());
             amountCardsDealer.push(cardBackSideCreate("contentDealer"));
+            cardsInDeck -= 2;
+            deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
 
             if (value === 21) {
                 hitBtn.disabled = true;
@@ -55,7 +57,7 @@ hitBtn.addEventListener("click", () => {
         else {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
-            amountCards.push(cardContentGenerateMain("content"));
+            amountCards.push(cardPlayer());
             
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
@@ -237,8 +239,12 @@ function modalWinFinalClose(looseOrWin) {
 
 
 // Functions for creating something
-function cardContentGenerateMain(id) {
-    cardCreatingElements(id, defineNumber(), defineSymbol(), defineColor());
+function cardPlayer() {
+    cardCreatingElements("content", defineNumber(playerPoints ,value), defineSymbol(), defineColor());
+}
+
+function cardDealer() {
+    cardCreatingElements("contentDealer", defineNumber(dealerPoints ,valueDealer), defineSymbol(), defineColor());
 }
 
 function cardCreatingElements(id, number, symbol, color) {
@@ -329,24 +335,25 @@ function createSymMain(symbol) {
 // Functions for generating content of card
 function randomNumber() {
     let indexNum = Math.floor((Math.random()*(15-2)) + 2);
-    console.log(indexNum);
+    // console.log(indexNum);
     return indexNum;
 }
 
 function randomSymbol() {
     let indexSym = Math.floor((Math.random()*(5-1)) + 1);
-    console.log(indexSym);
+    // console.log(indexSym);
     return indexSym;
 }
 
 function randomColor() {
     let indexCol = Math.floor((Math.random()*(3-1)) + 1);
-    console.log(indexCol);
+    // console.log(indexCol);
     return indexCol;
 }
+let asdaf = 0
 
 // Define functions: Number, Symbol, Color
-function defineNumber() {
+function defineNumber(forPoints, forValue) {
     let NumCard = randomNumber();
     
     if (NumCard <= 10) {
@@ -392,19 +399,24 @@ function defineNumber() {
     }
 
     if (NumCard <= 10) {
-        value += NumCard;
+        forValue += NumCard;
+        asdaf += NumCard
     }
     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        value += 10;
+        forValue += 10;
+        asdaf += 10
     }
     else if (NumCard === 14 && amountCards.length < 3) {
-        value += 11;
+        forValue += 11;
+        asdaf += 11
     }
     else {
-        value += 1;
+        asdaf++
+        forValue++;
     }
-
-    playerPoints = value;
+    console.log("asdaf" + asdaf)
+    forPoints = forValue;
+    console.log(forPoints);
 
     return numberCard;
 }
