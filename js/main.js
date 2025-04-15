@@ -91,6 +91,7 @@ hitBtn.addEventListener("click", () => {
         }
     
         console.log("Now: " + value);
+        console.log("Now Dealer: " + valueDealer);
     }
 });
 
