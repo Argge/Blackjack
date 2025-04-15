@@ -237,7 +237,7 @@ function modalWinFinalClose(looseOrWin) {
 
 
 // Functions for creating something
-function cardContentGenerateMain(value, id) {
+function cardContentGenerateMain(id) {
     cardCreatingElements(id, defineNumber(), defineSymbol(), defineColor());
 }
 
