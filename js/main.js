@@ -15,14 +15,13 @@ let numberCard = null;
 let symbolCard = null;
 let symbolMain = null;
 
-let value = 0;
-let valueDealer = 0;
-let amountCards = [];
+let amountCardsPlayer = [];
 let amountCardsDealer = [];
 
 let playerPoints = 0;
 let dealerPoints = 0;
 let playerWins = 0;
+let dealerWins = 0;
 let cardsInDeck = 52;
 let playerBank = 100;
 let gameBank = 0;
@@ -34,51 +33,49 @@ hitBtn.addEventListener("click", () => {
         modalTypeText("Did a bet");
     }
     else {
-        if (amountCards.length < 1) {
+        if (amountCardsPlayer.length < 1) {
 
-            amountCards.push(cardPlayer());
-            amountCards.push(cardPlayer());
+            amountCardsPlayer.push(cardPlayer());
+            amountCardsPlayer.push(cardPlayer());
             amountCardsDealer.push(cardDealer());
             amountCardsDealer.push(cardBackSideCreate("contentDealer"));
             cardsInDeck -= 2;
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
 
-            if (value === 21) {
+            if (playerPoints === 21) {
                 hitBtn.disabled = true;
-                playerPoints += value;
                 playerWins++;
                 gameBank *= 2.5;
                 playerBank += gameBank;
                 playerBankCounter.textContent = "Your bank: " + playerBank + "$";
                 gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("Blackjack!", "playerPointsCounter", "Your points: ", playerPoints);
+                modalWinClose("Blackjack!");
             }
         }
         else {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
-            amountCards.push(cardPlayer());
+            amountCardsPlayer.push(cardPlayer());
             
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
     
                 
-            if (value === 21) {
+            if (playerPoints === 21) {
                 hitBtn.disabled = true;
-                playerPoints += value;
                 playerWins++;
                 gameBank *= 2;
                 playerBank += gameBank;
                 playerBankCounter.textContent = "Your bank: " + playerBank + "$";
                 gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("You win!", "playerPointsCounter", "Your points: ", playerPoints);
+                modalWinClose("You win!");
             }
-            else if (value > 21) {
+            else if (playerPoints > 21) {
                 hitBtn.disabled = true;
-                dealerPoints += value;
+                dealerWins++;
                 gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("You loose", "dealerPointsCounter", "Dealer points: ", dealerPoints);
+                modalWinClose("You loose");
             }
             else {}
             
@@ -92,16 +89,27 @@ hitBtn.addEventListener("click", () => {
             }
         }
     
-        console.log("Now: " + value);
+        console.log("Player: " + playerPoints);
+        console.log("Dealer: " + dealerPoints);
     }
 });
 
 standBtn.addEventListener("click", () => {
     const contentDealer = document.getElementById("contentDealer");
     contentDealer.lastChild.remove();
-    amountCardsDealer.push(cardContentGenerateMain("contentDealer"));
+    amountCardsDealer.push(cardDealer());
 
+    if (playerPoints > dealerPoints) {
+        gameBank *= 2;
+        playerBank += gameBank;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        modalWinClose("You win");
+    }
+    else {
+        modalWinClose("You loose");    
+    }
 
+    console.log("Dealer: " + dealerPoints);
 });
 
 // Coin buttons
@@ -193,25 +201,27 @@ function modalTypeText(text) {
     });
 }
 
-function modalWinClose(text, id , counterPlayerDealer, pointsPlayerDealer) {
+function modalWinClose(text) {
     createModalWin(text);
-    console.log("After: " + value);
-    value = 0;
+    console.log("After: " + playerPoints);
+    playerPoints = 0;
+    dealerPoints = 0;
     
     const resetBtn = document.getElementById("resetBtn");
     const modalWin = document.getElementById("modalWin");
     const playerWinsCounter = document.getElementById("playerWinsCounter");
+    const dealerWinsCounter = document.getElementById("dealerWinsCounter");
 
     resetBtn.addEventListener("click", () => {
-        let counter = document.getElementById(id);
-        counter.textContent = counterPlayerDealer + pointsPlayerDealer;
+        dealerWinsCounter.textContent = "Dealer wins: " + dealerWins;
         playerWinsCounter.textContent = "Your wins: " + playerWins;
         content.innerHTML = "";
         contentDealer.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
         hitBtn.disabled = false;
-        amountCards = [];
+        amountCardsPlayer = [];
+        amountCardsDealer = [];
         gameBank = 0;
     });
 }
@@ -233,18 +243,18 @@ function modalWinFinalClose(looseOrWin) {
 
                 cardsInDeck = 52;
                 deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
-                amountCards = [];
+                amountCardsPlayer = [];
             });
 }
 
 
 // Functions for creating something
 function cardPlayer() {
-    cardCreatingElements("content", defineNumber(playerPoints ,value), defineSymbol(), defineColor());
+    cardCreatingElements("content", defineNumberPlayer(), defineSymbol(), defineColor());
 }
 
 function cardDealer() {
-    cardCreatingElements("contentDealer", defineNumber(dealerPoints ,valueDealer), defineSymbol(), defineColor());
+    cardCreatingElements("contentDealer", defineNumberDealer(), defineSymbol(), defineColor());
 }
 
 function cardCreatingElements(id, number, symbol, color) {
@@ -350,10 +360,9 @@ function randomColor() {
     // console.log(indexCol);
     return indexCol;
 }
-let asdaf = 0
 
 // Define functions: Number, Symbol, Color
-function defineNumber(forPoints, forValue) {
+function defineNumberPlayer() {
     let NumCard = randomNumber();
     
     if (NumCard <= 10) {
@@ -399,24 +408,80 @@ function defineNumber(forPoints, forValue) {
     }
 
     if (NumCard <= 10) {
-        forValue += NumCard;
-        asdaf += NumCard
+        playerPoints += NumCard;
     }
     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        forValue += 10;
-        asdaf += 10
+        playerPoints += 10;
     }
-    else if (NumCard === 14 && amountCards.length < 3) {
-        forValue += 11;
-        asdaf += 11
+    else if (NumCard === 14 && amountCardsPlayer.length < 3) {
+        playerPoints += 11;
     }
     else {
-        asdaf++
-        forValue++;
+        playerPoints++;
     }
-    console.log("asdaf" + asdaf)
-    forPoints = forValue;
-    console.log(forPoints);
+    console.log(playerPoints);
+
+    return numberCard;
+}
+
+function defineNumberDealer() {
+    let NumCard = randomNumber();
+    
+    if (NumCard <= 10) {
+        if (NumCard === 2) {
+            numberCard = "2";
+        }
+        else if (NumCard === 3) {
+            numberCard = "3";
+        }
+        else if (NumCard === 4) {
+            numberCard = "4";
+        }
+        else if (NumCard === 5) {
+            numberCard = "5";
+        }
+        else if (NumCard === 6) {
+            numberCard = "6";
+        }
+        else if (NumCard === 7) {
+            numberCard = "7";
+        }
+        else if (NumCard === 8) {
+            numberCard = "8";
+        }
+        else if (NumCard === 9) {
+            numberCard = "9";
+        }
+        else {
+            numberCard = "10";
+        }
+    }
+    else if (NumCard === 11) {
+        numberCard = "J";
+    }
+    else if (NumCard === 12) {
+        numberCard = "Q";
+    }
+    else if (NumCard === 13) {
+        numberCard = "K";
+    }
+    else {
+        numberCard = "A";
+    }
+
+    if (NumCard <= 10) {
+        dealerPoints += NumCard;
+    }
+    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
+        dealerPoints += 10;
+    }
+    else if (NumCard === 14 && amountCardsDealer.length < 3) {
+        dealerPoints += 11;
+    }
+    else {
+        dealerPoints++;
+    }
+    console.log(dealerPoints);
 
     return numberCard;
 }
@@ -451,51 +516,3 @@ function defineColor() {
 
     return colorCard;
 }
-
-// function defineValue(value, number) {
-//     if (number === "1") {
-//         value++;
-//     }
-//     else if (number === "2") {
-//         value += 2;
-//     }
-//     else if (number === "3") {
-//         value += 3;
-//     }
-//     else if (number === "4") {
-//         value += 4;
-//     }
-//     else if (number === "5") {
-//         value += 5;
-//     }
-//     else if (number === "6") {
-//         value += 6;
-//     }
-//     else if (number === "7") {
-//         value += 7;
-//     }
-//     else if (number === "8") {
-//         value += 8;
-//     }
-//     else if (number === "9") {
-//         value += 9;
-//     }
-//     else if (number === "10") {
-//         value += 10;
-//     }
-//     else if (number === "J") {
-//         value += 10;
-//     }
-//     else if (number === "Q") {
-//         value += 10;
-//     }
-//     else if (number === "K") {
-//         value += 10;
-//     }
-//     else if (number === "A" && amountCards.length < 3) {
-//         value += 11;
-//     }
-//     else {
-//         value++;
-//     }
-// }
