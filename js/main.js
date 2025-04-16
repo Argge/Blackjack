@@ -21,7 +21,7 @@ let symbolMain = null;
 let amountCardsPlayer = [];
 let amountCardsDealer = [];
 
-let playerPoints = [[0],[]];
+let playerPoints = [[],[]];
 let dealerPoints = 0;
 
 let playerWins = 0;
@@ -49,10 +49,9 @@ hitBtn.addEventListener("click", () => {
             cardsInDeck -= 2;
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
 
+            // BLACKJACK
             if (playerPoints === 21) {
-                for (i = 0; i < buttonsTable.length; i++) {
-                    buttonsTable[i].disabled = true;
-                }
+                turnOffButtons();
                 playerWins++;
                 gameBank *= 2.5;
                 playerBank += gameBank;
@@ -60,10 +59,9 @@ hitBtn.addEventListener("click", () => {
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("Blackjack!");
             }
+            // DOUBLE A
             else if (playerPoints === 22) {
-                for (i = 0; i < buttonsTable.length; i++) {
-                    buttonsTable[i].disabled = true;
-                }
+                turnOffButtons();
                 playerWins++;
                 gameBank *= 2.5;
                 playerBank += gameBank;
@@ -77,26 +75,32 @@ hitBtn.addEventListener("click", () => {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
             
-            
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
     
+            splitTurn2 = false;
+            // IF SPLIT MODE IS TURN ON
             if (splitTurn === false) {
                 amountCardsPlayer.push(cardPlayer());
                 amountCardsPlayer.push(cardPlayer());
-                playerPoints[0][0] /= 2;
-                playerPoints[1].push(playerPoints[0][0]);
-
+                // playerPoints[0][0] /= 2;
+                playerPoints[1].push(playerPoints[0][1]);
+                splitTurn2 = true;
+            }
+            else if (splitTurn === false && splitTurn2 === true) {
+                amountCardsPlayer.push(cardPlayer());
+                amountCardsPlayer.push(cardPlayer());
+                playerPoints[1].push(playerPoints[0].pop);
+                playerPoints[0].pop(); 
             }
             else {
                 amountCardsPlayer.push(cardPlayer());
             }
-                
+            
+            // DEFAULT WIN
             if (playerPoints === 21) {
-                for (i = 0; i < buttonsTable.length; i++) {
-                    buttonsTable[i].disabled = true;
-                }
+                turnOffButtons();
                 playerWins++;
                 gameBank *= 2;
                 playerBank += gameBank;
@@ -104,16 +108,16 @@ hitBtn.addEventListener("click", () => {
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("You win!");
             }
+            // DEFAULT LOOSE
             else if (playerPoints > 21) {
-                for (i = 0; i < buttonsTable.length; i++) {
-                    buttonsTable[i].disabled = true;
-                }
+                turnOffButtons();
                 dealerWins++;
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("You loose");
             }
             else {}
             
+            // THE END
             if (cardsInDeck === 0) {
                 if (playerPoints > dealerPoints) {
                     modalWinFinalClose("You win game!");
@@ -171,18 +175,17 @@ splitBtn.addEventListener("click", () => {
     if (playerA[0][0] === playerA[0][1]) {
         playerA[1].push(playerA[0][1]);
         playerA[0].pop();
-
-        playerPoints[0][0] /= 2;
-        playerPoints[1].push(playerPoints[0][0]);
-
-        splitTurn = false;
-        if (splitTurn === false) {
-            splitBtn.disabled = true;
-        }
-        else {
-            splitBtn.disabled = false;
-        }
+    
+        playerPoints[1].push(playerPoints[0].length);
+        playerPoints[0].pop();
+    }  
+    splitTurn = false;
+    if (splitTurn === false) {
+        splitBtn.disabled = true;
     }
+    else {
+        splitBtn.disabled = false;
+        }
 });
 
 // Coin buttons
@@ -485,16 +488,16 @@ function defineNumberPlayer() {
     }
 
     if (NumCard <= 10) {
-        playerPoints[0][0] += NumCard;
+        playerPoints[0].push(NumCard);
     }
     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        playerPoints[0][0] += 10;
+        playerPoints[0].push(10);
     }
     else if (NumCard === 14 && amountCardsPlayer.length < 3) {
-        playerPoints[0][0] += 11;
+        playerPoints[0].push(11);
     }
     else {
-        playerPoints[0][0]++;
+        playerPoints[0].push(1);
     }
     console.log(playerPoints);
     playerA[0].push(numberCard);
@@ -594,4 +597,10 @@ function defineColor() {
     }
 
     return colorCard;
+}
+
+function turnOffButtons() {
+    for (i = 0; i < buttonsTable.length; i++) {
+        buttonsTable[i].disabled = true;
+    }    
 }
