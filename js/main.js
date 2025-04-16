@@ -8,6 +8,8 @@ const coinBtn50 = document.getElementById("coin50");
 const coinBtn100 = document.getElementById("coin100");
 const coinBtn500 = document.getElementById("coin500");
 
+const buttonsTable = document.getElementsByTagName("button");
+
 let playerBankCounter = document.getElementById("playerBankCounter");
 let gameBankCounter = document.getElementById("gameBankCounter");
 
@@ -23,8 +25,11 @@ let dealerPoints = 0;
 let playerWins = 0;
 let dealerWins = 0;
 let cardsInDeck = 52;
-let playerBank = 100;
+let playerBank = 500;
 let gameBank = 0;
+
+let dealerA = [];
+let playerA = [["A", ],["A", ]];
 
 hitBtn.addEventListener("click", () => {
 
@@ -43,7 +48,9 @@ hitBtn.addEventListener("click", () => {
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
 
             if (playerPoints === 21) {
-                hitBtn.disabled = true;
+                for (i = 0; i < buttonsTable.length; i++) {
+                    buttonsTable[i].disabled = true;
+                }
                 playerWins++;
                 gameBank *= 2.5;
                 playerBank += gameBank;
@@ -51,6 +58,18 @@ hitBtn.addEventListener("click", () => {
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("Blackjack!");
             }
+            else if (playerPoints === 22) {
+                for (i = 0; i < buttonsTable.length; i++) {
+                    buttonsTable[i].disabled = true;
+                }
+                playerWins++;
+                gameBank *= 2.5;
+                playerBank += gameBank;
+                playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+                gameBankCounter.textContent = "Game bank: 0$";
+                modalWinClose("Blackjack!");
+            }
+            else {}
         }
         else {
             const content = document.getElementById("content");
@@ -63,7 +82,9 @@ hitBtn.addEventListener("click", () => {
     
                 
             if (playerPoints === 21) {
-                hitBtn.disabled = true;
+                for (i = 0; i < buttonsTable.length; i++) {
+                    buttonsTable[i].disabled = true;
+                }
                 playerWins++;
                 gameBank *= 2;
                 playerBank += gameBank;
@@ -72,7 +93,9 @@ hitBtn.addEventListener("click", () => {
                 modalWinClose("You win!");
             }
             else if (playerPoints > 21) {
-                hitBtn.disabled = true;
+                for (i = 0; i < buttonsTable.length; i++) {
+                    buttonsTable[i].disabled = true;
+                }
                 dealerWins++;
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("You loose");
@@ -99,7 +122,25 @@ standBtn.addEventListener("click", () => {
     contentDealer.lastChild.remove();
     amountCardsDealer.push(cardDealer());
 
+    if ((dealerA[0] && dealerA[1] === "A") && (playerA[0] && playerA[1] !== "A")) {
+        modalWinClose("You loose"); 
+    }
+    else if ((dealerA[0] && dealerA[1] === "A") && (playerA[0] && playerA[1] === "A")) {
+        modalWinClose("");
+    }
+    else {}
+
+    if (dealerPoints < 17) {
+        amountCardsDealer.push(cardDealer());
+    }
+
     if (playerPoints > dealerPoints) {
+        gameBank *= 2;
+        playerBank += gameBank;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        modalWinClose("You win");
+    }
+    else if (dealerPoints > 21) {
         gameBank *= 2;
         playerBank += gameBank;
         playerBankCounter.textContent = "Your bank: " + playerBank + "$";
@@ -111,6 +152,8 @@ standBtn.addEventListener("click", () => {
 
     console.log("Dealer: " + dealerPoints);
 });
+
+
 
 // Coin buttons
 coinBtn1.addEventListener("click", () => {
@@ -219,10 +262,15 @@ function modalWinClose(text) {
         contentDealer.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
-        hitBtn.disabled = false;
+        // hitBtn.disabled = false;
         amountCardsPlayer = [];
         amountCardsDealer = [];
+        playerA = [];
+        dealerA = [];
         gameBank = 0;
+        for (i = 0; i < buttonsTable.length; i++) {
+            buttonsTable[i].disabled = false;
+        }
     });
 }
 
@@ -420,6 +468,7 @@ function defineNumberPlayer() {
         playerPoints++;
     }
     console.log(playerPoints);
+    playerA.push(numberCard);
 
     return numberCard;
 }
@@ -482,6 +531,7 @@ function defineNumberDealer() {
         dealerPoints++;
     }
     console.log(dealerPoints);
+    dealerA.push(numberCard);
 
     return numberCard;
 }
