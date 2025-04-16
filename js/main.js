@@ -21,8 +21,9 @@ let symbolMain = null;
 let amountCardsPlayer = [];
 let amountCardsDealer = [];
 
-let playerPoints = 0;
+let playerPoints = [[0],[]];
 let dealerPoints = 0;
+
 let playerWins = 0;
 let dealerWins = 0;
 let cardsInDeck = 52;
@@ -84,6 +85,9 @@ hitBtn.addEventListener("click", () => {
             if (splitTurn === false) {
                 amountCardsPlayer.push(cardPlayer());
                 amountCardsPlayer.push(cardPlayer());
+                playerPoints[0][0] /= 2;
+                playerPoints[1].push(playerPoints[0][0]);
+
             }
             else {
                 amountCardsPlayer.push(cardPlayer());
@@ -132,10 +136,10 @@ standBtn.addEventListener("click", () => {
     amountCardsDealer.push(cardDealer());
 
     if ((dealerA[0] && dealerA[1] === "A") && (playerA[0][0] && playerA[0][1] !== "A")) {
-        modalWinClose("You loose"); 
+        modalWinClose("You loose!"); 
     }
     else if ((dealerA[0] && dealerA[1] === "A") && (playerA[0][0] && playerA[0][1] === "A")) {
-        modalWinClose("");
+        modalWinClose("Draw");
     }
     else {}
 
@@ -168,9 +172,10 @@ splitBtn.addEventListener("click", () => {
         playerA[1].push(playerA[0][1]);
         playerA[0].pop();
 
-        playerPoints /= 2;
-        splitTurn = false;
+        playerPoints[0][0] /= 2;
+        playerPoints[1].push(playerPoints[0][0]);
 
+        splitTurn = false;
         if (splitTurn === false) {
             splitBtn.disabled = true;
         }
@@ -272,7 +277,7 @@ function modalTypeText(text) {
 function modalWinClose(text) {
     createModalWin(text);
     console.log("After: " + playerPoints);
-    playerPoints = 0;
+    playerPoints = [[],[]];
     dealerPoints = 0;
     
     const resetBtn = document.getElementById("resetBtn");
@@ -287,7 +292,6 @@ function modalWinClose(text) {
         contentDealer.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
-        // hitBtn.disabled = false;
         amountCardsPlayer = [];
         amountCardsDealer = [];
         playerA = [];
@@ -481,16 +485,16 @@ function defineNumberPlayer() {
     }
 
     if (NumCard <= 10) {
-        playerPoints += NumCard;
+        playerPoints[0][0] += NumCard;
     }
     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        playerPoints += 10;
+        playerPoints[0][0] += 10;
     }
     else if (NumCard === 14 && amountCardsPlayer.length < 3) {
-        playerPoints += 11;
+        playerPoints[0][0] += 11;
     }
     else {
-        playerPoints++;
+        playerPoints[0][0]++;
     }
     console.log(playerPoints);
     playerA[0].push(numberCard);
