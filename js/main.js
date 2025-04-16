@@ -1,5 +1,6 @@
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
+const splitBtn = document.getElementById("splitBtn");
 
 const coinBtn1 = document.getElementById("coin1");
 const coinBtn5 = document.getElementById("coin5");
@@ -29,7 +30,7 @@ let playerBank = 500;
 let gameBank = 0;
 
 let dealerA = [];
-let playerA = [["A", ],["A", ]];
+let playerA = [[],[]];
 
 hitBtn.addEventListener("click", () => {
 
@@ -74,12 +75,19 @@ hitBtn.addEventListener("click", () => {
         else {
             const content = document.getElementById("content");
             const contentDealer = document.getElementById("contentDealer")
-            amountCardsPlayer.push(cardPlayer());
+            
             
             cardsInDeck--;
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
     
+            if (splitTurn === false) {
+                amountCardsPlayer.push(cardPlayer());
+                amountCardsPlayer.push(cardPlayer());
+            }
+            else {
+                amountCardsPlayer.push(cardPlayer());
+            }
                 
             if (playerPoints === 21) {
                 for (i = 0; i < buttonsTable.length; i++) {
@@ -110,6 +118,7 @@ hitBtn.addEventListener("click", () => {
                     modalWinFinalClose("You loose game!");
                 }
             }
+
         }
     
         console.log("Player: " + playerPoints);
@@ -122,10 +131,10 @@ standBtn.addEventListener("click", () => {
     contentDealer.lastChild.remove();
     amountCardsDealer.push(cardDealer());
 
-    if ((dealerA[0] && dealerA[1] === "A") && (playerA[0] && playerA[1] !== "A")) {
+    if ((dealerA[0] && dealerA[1] === "A") && (playerA[0][0] && playerA[0][1] !== "A")) {
         modalWinClose("You loose"); 
     }
-    else if ((dealerA[0] && dealerA[1] === "A") && (playerA[0] && playerA[1] === "A")) {
+    else if ((dealerA[0] && dealerA[1] === "A") && (playerA[0][0] && playerA[0][1] === "A")) {
         modalWinClose("");
     }
     else {}
@@ -153,7 +162,23 @@ standBtn.addEventListener("click", () => {
     console.log("Dealer: " + dealerPoints);
 });
 
+let splitTurn = true;
+splitBtn.addEventListener("click", () => {
+    if (playerA[0][0] === playerA[0][1]) {
+        playerA[1].push(playerA[0][1]);
+        playerA[0].pop();
 
+        playerPoints /= 2;
+        splitTurn = false;
+
+        if (splitTurn === false) {
+            splitBtn.disabled = true;
+        }
+        else {
+            splitBtn.disabled = false;
+        }
+    }
+});
 
 // Coin buttons
 coinBtn1.addEventListener("click", () => {
@@ -392,7 +417,7 @@ function createSymMain(symbol) {
 
 // Functions for generating content of card
 function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
+    let indexNum = Math.floor((Math.random()*(2-2)) + 2);
     // console.log(indexNum);
     return indexNum;
 }
@@ -468,7 +493,7 @@ function defineNumberPlayer() {
         playerPoints++;
     }
     console.log(playerPoints);
-    playerA.push(numberCard);
+    playerA[0].push(numberCard);
 
     return numberCard;
 }
