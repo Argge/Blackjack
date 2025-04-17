@@ -24,6 +24,8 @@ let amountCardsDealer = [];
 let playerPoints = [[],[]];
 let dealerPoints = 0;
 
+let sumPlayerPoints = 0;
+
 let playerWins = 0;
 let dealerWins = 0;
 let cardsInDeck = 52;
@@ -47,7 +49,23 @@ hitBtn.addEventListener("click", () => {
             amountCardsDealer.push(cardDealer());
             amountCardsDealer.push(cardBackSideCreate("contentDealer"));
             cardsInDeck -= 2;
-            deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
+            deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+            
+            sumPlayerPoints = playerPoints[0].reduce((acc, playerPoints) => acc + playerPoints[0]);
+
+            for(j = 0; j < playerPoints[1].length; j++) {
+                sumPlayerPoints += playerPoints[j]
+            }
+
+            // for(i = 0; i < playerPoints[0].length; i++) {
+            //     // sumPlayerPoints += playerPoints[i];
+
+            //     for(j = 0; j < playerPoints[1].length; j++) {
+            //         sumPlayerPoints += playerPoints[i] + playerPoints[j]
+            //     }
+            // }
+
+
 
             // BLACKJACK
             if (playerPoints === 21) {
@@ -79,20 +97,20 @@ hitBtn.addEventListener("click", () => {
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck; 
     
-            splitTurn2 = false;
+            let splitTurn2 = false;
             // IF SPLIT MODE IS TURN ON
             if (splitTurn === false) {
                 amountCardsPlayer.push(cardPlayer());
                 amountCardsPlayer.push(cardPlayer());
-                // playerPoints[0][0] /= 2;
-                playerPoints[1].push(playerPoints[0][1]);
+                playerPoints[1].push(playerPoints[0].pop());
                 splitTurn2 = true;
+
+                var 
             }
             else if (splitTurn === false && splitTurn2 === true) {
                 amountCardsPlayer.push(cardPlayer());
                 amountCardsPlayer.push(cardPlayer());
-                playerPoints[1].push(playerPoints[0].pop);
-                playerPoints[0].pop(); 
+                playerPoints[1].push(playerPoints[0].pop());
             }
             else {
                 amountCardsPlayer.push(cardPlayer());
@@ -173,11 +191,9 @@ standBtn.addEventListener("click", () => {
 let splitTurn = true;
 splitBtn.addEventListener("click", () => {
     if (playerA[0][0] === playerA[0][1]) {
-        playerA[1].push(playerA[0][1]);
-        playerA[0].pop();
+        playerA[1].push(playerA[0].pop());
     
-        playerPoints[1].push(playerPoints[0].length);
-        playerPoints[0].pop();
+        playerPoints[1].push(playerPoints[0].pop());
     }  
     splitTurn = false;
     if (splitTurn === false) {
@@ -186,6 +202,7 @@ splitBtn.addEventListener("click", () => {
     else {
         splitBtn.disabled = false;
         }
+        // splitTurn = true;
 });
 
 // Coin buttons
@@ -424,7 +441,7 @@ function createSymMain(symbol) {
 
 // Functions for generating content of card
 function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(2-2)) + 2);
+    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
     // console.log(indexNum);
     return indexNum;
 }
@@ -444,7 +461,7 @@ function randomColor() {
 // Define functions: Number, Symbol, Color
 function defineNumberPlayer() {
     let NumCard = randomNumber();
-    
+
     if (NumCard <= 10) {
         if (NumCard === 2) {
             numberCard = "2";
