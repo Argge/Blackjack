@@ -41,6 +41,8 @@ hitBtn.addEventListener("click", () => {
 
     if (gameBank === 0) {
         hitBtn.disabled = true;
+        splitBtn.disabled = true;
+        standBtn.disabled = true;
         modalTypeText("Did a bet");
     }
     else {
@@ -50,6 +52,7 @@ hitBtn.addEventListener("click", () => {
             amountCardsPlayer.push(cardPlayer());
             amountCardsDealer.push(cardDealer());
             amountCardsDealer.push(cardBackSideCreate("contentDealer"));
+
             cardsInDeck -= 2;
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
 
@@ -66,6 +69,8 @@ hitBtn.addEventListener("click", () => {
                 playerBankCounter.textContent = "Your bank: " + playerBank + "$";
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("Blackjack!");
+
+                // result(playerWins, playerBank, playerBankCounter, "Blackjack!");
             }
             // DOUBLE A
             else if (sumPlayerPoints1 === 22) {
@@ -76,6 +81,8 @@ hitBtn.addEventListener("click", () => {
                 playerBankCounter.textContent = "Your bank: " + playerBank + "$";
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("Blackjack!");
+
+                // result(playerWins, playerBank, playerBankCounter, "Blackjack!");
             }
             else {}
         }
@@ -87,7 +94,7 @@ hitBtn.addEventListener("click", () => {
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
 
-            sumFunc();
+            sumFunction();
             
             // DEFAULT WIN
             if (sumPlayerPoints1 === 21) {
@@ -114,7 +121,7 @@ hitBtn.addEventListener("click", () => {
                 amountCardsPlayer.push(cardPlayer());
                 playerPoints[1].push(playerPoints[0].pop());
 
-                sumFunc();
+                sumFunction();
 
                 if (sumPlayerPoints1 > 21 || sumPlayerPoints2 > 21) {
                     gameBank /= 2;
@@ -139,7 +146,7 @@ hitBtn.addEventListener("click", () => {
             else {
                 amountCardsPlayer.push(cardPlayer());
             }
-            
+
             // THE END
             if (cardsInDeck === 0) {
                 if (playerWins > dealerWins) {
@@ -177,17 +184,18 @@ standBtn.addEventListener("click", () => {
     if (sumPlayerPoints1 > dealerPoints || sumPlayerPoints1 > dealerPoints && sumPlayerPoints2 > dealerPoints) {
         gameBank *= 2;
         playerBank += gameBank;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        playerBankCounter.textContent = "Your bank: 0$";
         modalWinClose("You win");
     }
     else if (dealerPoints > 21) {
         gameBank *= 2;
         playerBank += gameBank;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        playerBankCounter.textContent = "Your bank: 0$";
         modalWinClose("You win");
     }
     else {
-        modalWinClose("You loose");    
+        modalWinClose("You loose");
+        playerBankCounter.textContent = "Your bank: 0$";
     }
 
     console.log("Dealer: " + dealerPoints);
@@ -199,7 +207,7 @@ splitBtn.addEventListener("click", () => {
         playerA[1].push(playerA[0].pop());
         sumPlayerPoints1 /= 2;
         sumPlayerPoints2 += sumPlayerPoints1;
-    
+        
         playerPoints[1].push(playerPoints[0].pop());    
     }  
     splitTurn = true;
@@ -208,8 +216,7 @@ splitBtn.addEventListener("click", () => {
     }
     else {
         splitBtn.disabled = false;
-        }
-        // splitTurn = false;
+    }
 });
 
 // Coin buttons
@@ -302,54 +309,60 @@ function modalTypeText(text) {
 }
 
 function modalWinClose(text) {
+
     createModalWin(text);
     console.log("After: " + sumPlayerPoints1);
-   
-    playerPoints = [[],[]];
-    dealerPoints = 0;
-    sumPlayerPoints1 = 0;
-    sumPlayerPoints2 = 0;
-    amountCardsPlayer = [];
-    amountCardsDealer = [];
-    playerA = [[],[]];
-    dealerA = [];
-    gameBank = 0;
-    
+
     const resetBtn = document.getElementById("resetBtn");
     const modalWin = document.getElementById("modalWin");
     const playerWinsCounter = document.getElementById("playerWinsCounter");
     const dealerWinsCounter = document.getElementById("dealerWinsCounter");
-
+   
     resetBtn.addEventListener("click", () => {
+
         dealerWinsCounter.textContent = "Dealer wins: " + dealerWins;
         playerWinsCounter.textContent = "Your wins: " + playerWins;
         content.innerHTML = "";
         contentDealer.innerHTML = "";
+
         modalWin.remove();
         modalGuiWin.remove();
+
         turnButtons(false);
+        splitTurn = false;
+
+        playerPoints = [[],[]];
+        dealerPoints = 0;
+        sumPlayerPoints1 = 0;
+        sumPlayerPoints2 = 0;
+        amountCardsPlayer = [];
+        amountCardsDealer = [];
+        playerA = [[],[]];
+        dealerA = [];
+        gameBank = 0;
     });
 }
 
 function modalWinFinalClose(looseOrWin) {
     createModalWin(looseOrWin);
-            const resetBtn = document.getElementById("resetBtn");
-            const modalWin = document.getElementById("modalWin");
-            const modalGuiWin = document.getElementById("modalGuiWin");
-            
-            resetBtn.addEventListener("click", () => {
-                let playerPointsCounter = document.getElementById("playerPointsCounter");
-                let dealerPointsCounter = document.getElementById("dealerPointsCounter");
-                playerPointsCounter.textContent = "Player points: 0";
-                dealerPointsCounter.textContent = "Dealer points: 0";
-                content.innerHTML = "";
-                modalWin.remove();
-                modalGuiWin.remove();
 
-                cardsInDeck = 52;
-                deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
-                amountCardsPlayer = [];
-            });
+    const resetBtn = document.getElementById("resetBtn");
+    const modalWin = document.getElementById("modalWin");
+    const modalGuiWin = document.getElementById("modalGuiWin");
+            
+    resetBtn.addEventListener("click", () => {
+        let playerPointsCounter = document.getElementById("playerPointsCounter");
+        let dealerPointsCounter = document.getElementById("dealerPointsCounter");
+        playerPointsCounter.textContent = "Player points: 0";
+        dealerPointsCounter.textContent = "Dealer points: 0";
+
+        content.innerHTML = "";
+        modalWin.remove();                
+        modalGuiWin.remove();
+        cardsInDeck = 52;
+        deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+        amountCardsPlayer = [];
+    });
 }
 
 
@@ -363,7 +376,6 @@ function cardDealer() {
 }
 
 function cardCreatingElements(id, number, symbol, color) {
-    // defineValue(value, number);
 
     // Creating BG of card
     let contentDiv = document.getElementById(id);
@@ -449,7 +461,7 @@ function createSymMain(symbol) {
 
 // Functions for generating content of card
 function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(7-7)) + 7);
+    let indexNum = Math.floor((Math.random()*(15-15)) + 15);
     // console.log(indexNum);
     return indexNum;
 }
@@ -631,7 +643,7 @@ function turnButtons(boolean) {
     }    
 }
 
-function sumFunc() {
+function sumFunction() {
     let asd1 = 0;
     let asd2 = 0;
     if (splitTurn === true) {
@@ -651,5 +663,14 @@ function sumFunc() {
         sumPlayerPoints1 += asd1;
         asd1 = 0
     }
-    
+}
+
+function result(whoWinCounter, whoWinBank, whoBankCounter, winOrLoose) {
+    turnButtons(true);
+    whoWinCounter++;
+    // gameBank *= 2;
+    whoWinBank += gameBank;
+    whoBankCounter.textContent = "Your bank: " + playerBank + "$";
+    gameBankCounter.textContent = "Game bank: 0$";
+    modalWinClose(winOrLoose);
 }
