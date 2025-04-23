@@ -38,6 +38,8 @@ body {
     gap: 30px;
 }
 
+
+
 /* CARD */
 
 .card {
@@ -93,24 +95,12 @@ body {
     font-size: 38px;
 }
 
+/* CARD */
+
+
 
 
 /* BUTTON */
-
-.randomBtn {
-    width: 200px;
-    height: 50px;
-    background-color: #000;
-    border-radius: 10px;
-    border: 0;
-    color: #fff;
-}
-
-.randomBtn:hover {
-    background-color: #1d1d1d;
-}
-
-
 
 .randomBtnCard {
     width: 190px;
@@ -127,11 +117,11 @@ body {
 }
 
 .randomBtnCard:hover {
-    /* background-blend-mode:screen; */
     filter: brightness(1.1);
 }
 
 /* BUTTON */
+
 
 
 
@@ -142,6 +132,7 @@ body {
 .colorBlack {
     color: #000;
 }
+
 
 
 /* MODAL WINDOW */
@@ -189,6 +180,7 @@ body {
 
 
 
+
 /* GUI */
 .gui {
     width: 100%;
@@ -212,6 +204,7 @@ body {
     margin-left: 20px;
 }
 /* GUI */
+
 
 
 
@@ -246,7 +239,6 @@ body {
 }
 
 #mainButtons {
-    width: 600px;
     height: 100%;
     display: flex;
 

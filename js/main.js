@@ -1,4 +1,4 @@
-import { defineNumberPlayer, defineNumberDealer, defineColor, defineSymbol, turnOffButtons } from "./defineFunctions.js";
+// import { defineNumberPlayer, defineNumberDealer, defineColor, defineSymbol, turnOffButtons } from "./defineFunctions.js";
 
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
@@ -59,7 +59,7 @@ hitBtn.addEventListener("click", () => {
 
             // BLACKJACK
             if (sumPlayerPoints1 === 21) {
-                turnOffButtons();
+                turnButtons(true);
                 playerWins++;
                 gameBank *= 2.5;
                 playerBank += gameBank;
@@ -69,7 +69,7 @@ hitBtn.addEventListener("click", () => {
             }
             // DOUBLE A
             else if (sumPlayerPoints1 === 22) {
-                turnOffButtons();
+                turnButtons(true);
                 playerWins++;
                 gameBank *= 2.5;
                 playerBank += gameBank;
@@ -87,13 +87,11 @@ hitBtn.addEventListener("click", () => {
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
 
-            for(i = 0; i < playerPoints[0].length; i++) {
-                sumPlayerPoints1 += playerPoints[0][i];
-            }
+            sumFunc();
             
             // DEFAULT WIN
             if (sumPlayerPoints1 === 21) {
-                turnOffButtons();
+                turnButtons(true);
                 playerWins++;
                 gameBank *= 2;
                 playerBank += gameBank;
@@ -103,7 +101,7 @@ hitBtn.addEventListener("click", () => {
             }
             // DEFAULT LOOSE
             else if (sumPlayerPoints1 > 21) {
-                turnOffButtons();
+                turnButtons(true);
                 dealerWins++;
                 gameBankCounter.textContent = "Game bank: 0$";
                 modalWinClose("You loose");
@@ -111,31 +109,25 @@ hitBtn.addEventListener("click", () => {
             else {}
 
             // IF SPLIT MODE IS TURN ON
-            if (splitTurn === false) {
+            if (splitTurn === true) {
                 amountCardsPlayer.push(cardPlayer());
                 amountCardsPlayer.push(cardPlayer());
                 playerPoints[1].push(playerPoints[0].pop());
 
-                for(i = 0; i < playerPoints[0].length; i++) {
-                    sumPlayerPoints1 += playerPoints[0][i];
-                }
-                for(i = 0; i < playerPoints[1].length; i++) {
-                    sumPlayerPoints2 += playerPoints[1][i];
-                }
-
+                sumFunc();
 
                 if (sumPlayerPoints1 > 21 || sumPlayerPoints2 > 21) {
                     gameBank /= 2;
                     gameBankCounter.textContent = "Game bank: " + gameBank + "$";
                 }
                 else if (sumPlayerPoints1 > 21 && sumPlayerPoints2 > 21) {
-                    turnOffButtons();
+                    turnButtons(true);
                     dealerWins++;
                     gameBankCounter.textContent = "Game bank: 0$";
                     modalWinClose("You loose");
                 }
                 else if (sumPlayerPoints1 === 21 && sumPlayerPoints2 === 21) {
-                    turnOffButtons();
+                    turnButtons(true);
                     playerWins++;
                     gameBank *= 3.5;
                     playerBank += gameBank;
@@ -201,21 +193,23 @@ standBtn.addEventListener("click", () => {
     console.log("Dealer: " + dealerPoints);
 });
 
-let splitTurn = true;
+let splitTurn = false;
 splitBtn.addEventListener("click", () => {
     if (playerA[0][0] === playerA[0][1]) {
         playerA[1].push(playerA[0].pop());
+        sumPlayerPoints1 /= 2;
+        sumPlayerPoints2 += sumPlayerPoints1;
     
-        playerPoints[1].push(playerPoints[0].pop());
+        playerPoints[1].push(playerPoints[0].pop());    
     }  
-    splitTurn = false;
-    if (splitTurn === false) {
+    splitTurn = true;
+    if (splitTurn === true) {
         splitBtn.disabled = true;
     }
     else {
         splitBtn.disabled = false;
         }
-        // splitTurn = true;
+        // splitTurn = false;
 });
 
 // Coin buttons
@@ -333,9 +327,7 @@ function modalWinClose(text) {
         contentDealer.innerHTML = "";
         modalWin.remove();
         modalGuiWin.remove();
-        for (i = 0; i < buttonsTable.length; i++) {
-            buttonsTable[i].disabled = false;
-        }
+        turnButtons(false);
     });
 }
 
@@ -457,7 +449,7 @@ function createSymMain(symbol) {
 
 // Functions for generating content of card
 function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
+    let indexNum = Math.floor((Math.random()*(7-7)) + 7);
     // console.log(indexNum);
     return indexNum;
 }
@@ -475,166 +467,189 @@ function randomColor() {
 }
 
 
-// // Define functions: Number, Symbol, Color
-// function defineNumberPlayer() {
-//     let NumCard = randomNumber();
+// Define functions: Number, Symbol, Color
+function defineNumberPlayer() {
+    let NumCard = randomNumber();
 
-//     if (NumCard <= 10) {
-//         if (NumCard === 2) {
-//             numberCard = "2";
-//         }
-//         else if (NumCard === 3) {
-//             numberCard = "3";
-//         }
-//         else if (NumCard === 4) {
-//             numberCard = "4";
-//         }
-//         else if (NumCard === 5) {
-//             numberCard = "5";
-//         }
-//         else if (NumCard === 6) {
-//             numberCard = "6";
-//         }
-//         else if (NumCard === 7) {
-//             numberCard = "7";
-//         }
-//         else if (NumCard === 8) {
-//             numberCard = "8";
-//         }
-//         else if (NumCard === 9) {
-//             numberCard = "9";
-//         }
-//         else {
-//             numberCard = "10";
-//         }
-//     }
-//     else if (NumCard === 11) {
-//         numberCard = "J";
-//     }
-//     else if (NumCard === 12) {
-//         numberCard = "Q";
-//     }
-//     else if (NumCard === 13) {
-//         numberCard = "K";
-//     }
-//     else {
-//         numberCard = "A";
-//     }
+    if (NumCard <= 10) {
+        if (NumCard === 2) {
+            numberCard = "2";
+        }
+        else if (NumCard === 3) {
+            numberCard = "3";
+        }
+        else if (NumCard === 4) {
+            numberCard = "4";
+        }
+        else if (NumCard === 5) {
+            numberCard = "5";
+        }
+        else if (NumCard === 6) {
+            numberCard = "6";
+        }
+        else if (NumCard === 7) {
+            numberCard = "7";
+        }
+        else if (NumCard === 8) {
+            numberCard = "8";
+        }
+        else if (NumCard === 9) {
+            numberCard = "9";
+        }
+        else {
+            numberCard = "10";
+        }
+    }
+    else if (NumCard === 11) {
+        numberCard = "J";
+    }
+    else if (NumCard === 12) {
+        numberCard = "Q";
+    }
+    else if (NumCard === 13) {
+        numberCard = "K";
+    }
+    else {
+        numberCard = "A";
+    }
 
-//     if (NumCard <= 10) {
-//         playerPoints[0].push(NumCard);
-//     }
-//     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-//         playerPoints[0].push(10);
-//     }
-//     else if (NumCard === 14 && amountCardsPlayer.length < 3) {
-//         playerPoints[0].push(11);
-//     }
-//     else {
-//         playerPoints[0].push(1);
-//     }
-//     console.log(playerPoints);
-//     playerA[0].push(numberCard);
+    if (NumCard <= 10) {
+        playerPoints[0].push(NumCard);
+    }
+    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
+        playerPoints[0].push(10);
+    }
+    else if (NumCard === 14 && amountCardsPlayer.length < 3) {
+        playerPoints[0].push(11);
+    }
+    else {
+        playerPoints[0].push(1);
+    }
+    console.log(playerPoints);
+    playerA[0].push(numberCard);
 
-//     return numberCard;
-// }
+    return numberCard;
+}
 
-// function defineNumberDealer() {
-//     let NumCard = randomNumber();
+function defineNumberDealer() {
+    let NumCard = randomNumber();
     
-//     if (NumCard <= 10) {
-//         if (NumCard === 2) {
-//             numberCard = "2";
-//         }
-//         else if (NumCard === 3) {
-//             numberCard = "3";
-//         }
-//         else if (NumCard === 4) {
-//             numberCard = "4";
-//         }
-//         else if (NumCard === 5) {
-//             numberCard = "5";
-//         }
-//         else if (NumCard === 6) {
-//             numberCard = "6";
-//         }
-//         else if (NumCard === 7) {
-//             numberCard = "7";
-//         }
-//         else if (NumCard === 8) {
-//             numberCard = "8";
-//         }
-//         else if (NumCard === 9) {
-//             numberCard = "9";
-//         }
-//         else {
-//             numberCard = "10";
-//         }
-//     }
-//     else if (NumCard === 11) {
-//         numberCard = "J";
-//     }
-//     else if (NumCard === 12) {
-//         numberCard = "Q";
-//     }
-//     else if (NumCard === 13) {
-//         numberCard = "K";
-//     }
-//     else {
-//         numberCard = "A";
-//     }
+    if (NumCard <= 10) {
+        if (NumCard === 2) {
+            numberCard = "2";
+        }
+        else if (NumCard === 3) {
+            numberCard = "3";
+        }
+        else if (NumCard === 4) {
+            numberCard = "4";
+        }
+        else if (NumCard === 5) {
+            numberCard = "5";
+        }
+        else if (NumCard === 6) {
+            numberCard = "6";
+        }
+        else if (NumCard === 7) {
+            numberCard = "7";
+        }
+        else if (NumCard === 8) {
+            numberCard = "8";
+        }
+        else if (NumCard === 9) {
+            numberCard = "9";
+        }
+        else {
+            numberCard = "10";
+        }
+    }
+    else if (NumCard === 11) {
+        numberCard = "J";
+    }
+    else if (NumCard === 12) {
+        numberCard = "Q";
+    }
+    else if (NumCard === 13) {
+        numberCard = "K";
+    }
+    else {
+        numberCard = "A";
+    }
 
-//     if (NumCard <= 10) {
-//         dealerPoints += NumCard;
-//     }
-//     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-//         dealerPoints += 10;
-//     }
-//     else if (NumCard === 14 && amountCardsDealer.length < 3) {
-//         dealerPoints += 11;
-//     }
-//     else {
-//         dealerPoints++;
-//     }
-//     console.log(dealerPoints);
-//     dealerA.push(numberCard);
+    if (NumCard <= 10) {
+        dealerPoints += NumCard;
+    }
+    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
+        dealerPoints += 10;
+    }
+    else if (NumCard === 14 && amountCardsDealer.length < 3) {
+        dealerPoints += 11;
+    }
+    else {
+        dealerPoints++;
+    }
+    console.log(dealerPoints);
+    dealerA.push(numberCard);
 
-//     return numberCard;
-// }
+    return numberCard;
+}
 
-// function defineSymbol() {
+function defineSymbol() {
     
-//     let SymCard = randomSymbol();
+    let SymCard = randomSymbol();
 
-//         if (SymCard === 1) {
-//             symbolCard = "♠";
-//         }
-//         else if (SymCard === 2) {
-//             symbolCard = "♥";
-//         }
-//         else if (SymCard === 3) {
-//             symbolCard = "♣";
-//         }
-//         else {
-//             symbolCard = "♦";
-//         }
+        if (SymCard === 1) {
+            symbolCard = "♠";
+        }
+        else if (SymCard === 2) {
+            symbolCard = "♥";
+        }
+        else if (SymCard === 3) {
+            symbolCard = "♣";
+        }
+        else {
+            symbolCard = "♦";
+        }
 
-//     return symbolCard;
-// }
+    return symbolCard;
+}
 
-// function defineColor() {
-//     if (symbolCard === "♠" || symbolCard === "♣") {
-//         colorCard = "colorBlack";
-//     }
-//     else {
-//         colorCard = "colorRed";
-//     }
+function defineColor() {
+    if (symbolCard === "♠" || symbolCard === "♣") {
+        colorCard = "colorBlack";
+    }
+    else {
+        colorCard = "colorRed";
+    }
 
-//     return colorCard;
-// }
+    return colorCard;
+}
 
-// function turnOffButtons() {
-//     for (i = 0; i < buttonsTable.length; i++) {
-//         buttonsTable[i].disabled = true;
-//     }    
-// }
+function turnButtons(boolean) {
+    for (i = 0; i < buttonsTable.length; i++) {
+        buttonsTable[i].disabled = boolean;
+    }    
+}
+
+function sumFunc() {
+    let asd1 = 0;
+    let asd2 = 0;
+    if (splitTurn === true) {
+        asd1 = playerPoints[0].pop();
+        playerPoints[0].push(asd1);
+        sumPlayerPoints1 += asd1;
+        asd1 = 0
+
+        asd2 = playerPoints[1].pop();
+        playerPoints[1].push(asd2);
+        sumPlayerPoints2 += asd2;
+        asd2 = 0;
+    }
+    else {
+        asd1 = playerPoints[0].pop();
+        playerPoints[0].push(asd1);
+        sumPlayerPoints1 += asd1;
+        asd1 = 0
+    }
+    
+}
