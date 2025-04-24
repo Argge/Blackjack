@@ -39,6 +39,8 @@ let gameBank = 0;
 
 hitBtn.addEventListener("click", () => {
 
+    playerOrDealerWins = false;
+
     if (gameBank === 0) {
         hitBtn.disabled = true;
         splitBtn.disabled = true;
@@ -62,27 +64,15 @@ hitBtn.addEventListener("click", () => {
 
             // BLACKJACK
             if (sumPlayerPoints1 === 21) {
-                turnButtons(true);
-                playerWins++;
+                playerOrDealerWins = false;
                 gameBank *= 2.5;
-                playerBank += gameBank;
-                playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-                gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("Blackjack!");
-
-                // result(playerWins, playerBank, playerBankCounter, "Blackjack!");
+                result("Blackjack!");
             }
             // DOUBLE A
             else if (sumPlayerPoints1 === 22) {
-                turnButtons(true);
-                playerWins++;
+                playerOrDealerWins = false;
                 gameBank *= 2.5;
-                playerBank += gameBank;
-                playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-                gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("Blackjack!");
-
-                // result(playerWins, playerBank, playerBankCounter, "Blackjack!");
+                result("Blackjack!");            
             }
             else {}
         }
@@ -98,20 +88,14 @@ hitBtn.addEventListener("click", () => {
             
             // DEFAULT WIN
             if (sumPlayerPoints1 === 21) {
-                turnButtons(true);
-                playerWins++;
                 gameBank *= 2;
-                playerBank += gameBank;
-                playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-                gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("You win!");
+                playerOrDealerWins = false;
+                result("Dealer win");
             }
             // DEFAULT LOOSE
             else if (sumPlayerPoints1 > 21) {
-                turnButtons(true);
-                dealerWins++;
-                gameBankCounter.textContent = "Game bank: 0$";
-                modalWinClose("You loose");
+                playerOrDealerWins = true;
+                result("Dealer win");
             }
             else {}
 
@@ -128,20 +112,13 @@ hitBtn.addEventListener("click", () => {
                     gameBankCounter.textContent = "Game bank: " + gameBank + "$";
                 }
                 else if (sumPlayerPoints1 > 21 && sumPlayerPoints2 > 21) {
-                    turnButtons(true);
-                    dealerWins++;
-                    gameBankCounter.textContent = "Game bank: 0$";
-                    modalWinClose("You loose");
+                    playerOrDealerWins = true;
+                    result("Dealer win");
                 }
                 else if (sumPlayerPoints1 === 21 && sumPlayerPoints2 === 21) {
-                    turnButtons(true);
-                    playerWins++;
+                    playerOrDealerWins = false;
                     gameBank *= 3.5;
-                    playerBank += gameBank;
-                    playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-                    gameBankCounter.textContent = "Game bank: 0$";
-                    modalWinClose("You win!");
-                    }
+                    result("You win!");
             }
             else {
                 amountCardsPlayer.push(cardPlayer());
@@ -162,6 +139,7 @@ hitBtn.addEventListener("click", () => {
         console.log("Player: " + sumPlayerPoints1);
         console.log("Dealer: " + dealerPoints);
     }
+}
 });
 
 standBtn.addEventListener("click", () => {
@@ -220,76 +198,24 @@ splitBtn.addEventListener("click", () => {
 });
 
 // Coin buttons
-coinBtn1.addEventListener("click", () => {
-    if (playerBank >= 1) {
-        playerBank--;
-        gameBank++;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
-});
-
 coinBtn5.addEventListener("click", () => {
-    if (playerBank >= 5) {
-        playerBank -= 5;
-        gameBank += 5;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
+    coinButtonLogic(5);
 });
 
 coinBtn25.addEventListener("click", () => {
-    if (playerBank >= 25) {
-        playerBank -= 25;
-        gameBank += 25;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
+    coinButtonLogic(25);
 });
 
 coinBtn50.addEventListener("click", () => {
-    if (playerBank >= 50) {
-        playerBank -= 50;
-        gameBank += 50;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
+    coinButtonLogic(50);
 });
 
 coinBtn100.addEventListener("click", () => {
-    if (playerBank >= 100) {
-        playerBank -= 100;
-        gameBank += 100;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
+    coinButtonLogic(100);
 });
 
 coinBtn500.addEventListener("click", () => {
-    if (playerBank >= 500) {
-        playerBank -= 500;
-        gameBank += 500;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
+    coinButtonLogic(500);
 });
 
 
@@ -461,20 +387,17 @@ function createSymMain(symbol) {
 
 // Functions for generating content of card
 function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(15-15)) + 15);
-    // console.log(indexNum);
+    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
     return indexNum;
 }
 
 function randomSymbol() {
-    let indexSym = Math.floor((Math.random()*(5-1)) + 1);
-    // console.log(indexSym);
+    let indexSym = Math.floor((Math.random()*(5-1)) + 1)
     return indexSym;
 }
 
 function randomColor() {
     let indexCol = Math.floor((Math.random()*(3-1)) + 1);
-    // console.log(indexCol);
     return indexCol;
 }
 
@@ -665,12 +588,33 @@ function sumFunction() {
     }
 }
 
-function result(whoWinCounter, whoWinBank, whoBankCounter, winOrLoose) {
+function result(text) {
     turnButtons(true);
-    whoWinCounter++;
-    // gameBank *= 2;
-    whoWinBank += gameBank;
-    whoBankCounter.textContent = "Your bank: " + playerBank + "$";
+
+    if (playerOrDealerWins === false) {
+        playerWins++;
+    }
+    else {
+        dealerWins++;
+    }
+    
+    if (text === "You win!" || text === "Blackjack!") {
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        playerBank += gameBank;
+    }
     gameBankCounter.textContent = "Game bank: 0$";
-    modalWinClose(winOrLoose);
+
+    modalWinClose(text);
+}
+
+function coinButtonLogic(value) {
+    if (playerBank >= value) {
+        playerBank -= value;
+        gameBank += value;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
 }

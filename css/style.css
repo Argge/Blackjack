@@ -229,13 +229,14 @@ body {
 }
 
 #money {
-    width: 600px;
     height: 100%;
     background-color: #1d1d1d;
     display: flex;
     justify-content: space-around;
     align-items: center;
     border-radius: 0 10px 10px 0;
+    gap: 20px;
+    padding: 0 20px 0 20px;
 }
 
 #mainButtons {
@@ -288,14 +289,6 @@ body {
     background-color: #940b06;
 }
 
-#coin1 {
-    filter: hue-rotate(220deg);
-}
-
-#coin1:hover {
-    filter: hue-rotate(220deg) brightness(1.5);
-}
-
 #coin5 {
     filter: hue-rotate(100deg);
 }
@@ -309,11 +302,11 @@ body {
 }
 
 #coin50 {
-    filter: hue-rotate(70deg);
+    filter: hue-rotate(220deg);
 }
 
 #coin50:hover {
-    filter: hue-rotate(70deg) brightness(1.5);
+    filter: hue-rotate(220deg) brightness(1.5);
 }
 
 #coin100 {
