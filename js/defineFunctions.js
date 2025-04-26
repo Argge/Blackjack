@@ -156,8 +156,8 @@ export function defineColor() {
     return colorCard;
 }
 
-export function turnOffButtons() {
+export function turnButtons(boolean) {
     for (i = 0; i < buttonsTable.length; i++) {
-        buttonsTable[i].disabled = true;
+        buttonsTable[i].disabled = boolean;
     }    
 }

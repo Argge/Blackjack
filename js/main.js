@@ -1,4 +1,4 @@
-// import { defineNumberPlayer, defineNumberDealer, defineColor, defineSymbol, turnOffButtons } from "./defineFunctions.js";
+// import { defineNumberPlayer, defineNumberDealer, defineColor, defineSymbol, turnButtons } from "./defineFunctions.js";
 
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
@@ -39,7 +39,7 @@ let gameBank = 0;
 
 hitBtn.addEventListener("click", () => {
 
-    playerOrDealerWins = false;
+    playerOrDealerWins = false; // if it's false then in result() is choosed playerWins, else it's true - dealerWins 
 
     if (gameBank === 0) {
         hitBtn.disabled = true;
@@ -84,6 +84,7 @@ hitBtn.addEventListener("click", () => {
             let deckCardsCounter = document.getElementById("deckCardsCounter");
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
 
+            amountCardsPlayer.push(cardPlayer());
             sumFunction();
             
             // DEFAULT WIN
@@ -119,27 +120,25 @@ hitBtn.addEventListener("click", () => {
                     playerOrDealerWins = false;
                     gameBank *= 3.5;
                     result("You win!");
-            }
-            else {
-                amountCardsPlayer.push(cardPlayer());
-            }
-
-            // THE END
-            if (cardsInDeck === 0) {
-                if (playerWins > dealerWins) {
-                    modalWinFinalClose("You win game!");
                 }
                 else {
-                    modalWinFinalClose("You loose game!");
+                    amountCardsPlayer.push(cardPlayer());
+                }
+
+                // THE END
+                if (cardsInDeck === 0) {
+                    if (playerWins > dealerWins) {
+                        modalWinFinalClose("You win game!");
+                    }
+                    else {
+                        modalWinFinalClose("You loose game!");
+                    }
                 }
             }
-
         }
-    
         console.log("Player: " + sumPlayerPoints1);
         console.log("Dealer: " + dealerPoints);
     }
-}
 });
 
 standBtn.addEventListener("click", () => {
