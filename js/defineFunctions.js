@@ -1,4 +1,8 @@
-import { numberCard, symbolCard, playerPoints, dealerPoints } from "./vars.js";
+import { numberCard, symbolCard, playerPoints, dealerPoints, playerA, dealerA } from "./main.js";
+
+let numberCard = null;
+let symbolCard = null;
+let symbolMain = null;
 
 // Define functions: Number, Symbol, Color
 function defineNumberPlayer() {
@@ -158,12 +162,6 @@ function defineColor() {
     return colorCard;
 }
 
-function turnButtons(boolean) {
-    for (i = 0; i < buttonsTable.length; i++) {
-        buttonsTable[i].disabled = boolean;
-    }    
-}
-
 // Functions for generating content of card
 function randomNumber() {
     let indexNum = Math.floor((Math.random()*(15-2)) + 2);
@@ -175,4 +173,4 @@ function randomSymbol() {
     return indexSym;
 }
 
-export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, turnButtons, randomNumber, randomSymbol }
+export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, randomNumber, randomSymbol, numberCard, symbolCard, symbolMain }

@@ -1,12 +1,11 @@
-import { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, turnButtons } from "./defineFunctions.js";
-import { numberCard, symbolCard, symbolMain, amountCardsPlayer, amountCardsDealer, playerPoints, dealerPoints, playerA, dealerA, sumPlayerPoints1, sumPlayerPoints2, playerWins,dealerWins, cardsInDeck, playerBank, gameBank } from "./vars.js";
-import { coinBtn5, coinBtn25, coinBtn50, coinBtn100, coinBtn500 } from "./coinButtons.js";
+// import { numberCard, symbolCard, amountCardsPlayer, amountCardsDealer, playerPoints, dealerPoints, playerA, dealerA, sumPlayerPoints1, sumPlayerPoints2, playerWins,dealerWins, cardsInDeck, playerBank, gameBank } from "./vars.js";
+import { cardPlayer, cardDealer, cardBackSideCreate } from "./contentCardCreating.js";
+import { modalTypeText, modalWinClose, modalWinFinalClose } from "./modanWindow.js";
 
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
 const splitBtn = document.getElementById("splitBtn");
 
-const coinBtn1 = document.getElementById("coin1");
 const coinBtn5 = document.getElementById("coin5");
 const coinBtn25 = document.getElementById("coin25");
 const coinBtn50 = document.getElementById("coin50");
@@ -17,6 +16,23 @@ const buttonsTable = document.getElementsByTagName("button");
 
 let playerBankCounter = document.getElementById("playerBankCounter");
 let gameBankCounter = document.getElementById("gameBankCounter");
+
+let amountCardsPlayer = [];
+let amountCardsDealer = [];
+
+let playerPoints = [[],[]];
+let dealerPoints = 0;
+let playerA = [[],[]];
+let dealerA = [];
+
+let sumPlayerPoints1 = 0;
+let sumPlayerPoints2 = 0;
+
+let playerWins = 0;
+let dealerWins = 0;
+let cardsInDeck = 52;
+let playerBank = 500;
+let gameBank = 0;
 
 hitBtn.addEventListener("click", () => {
 
@@ -177,172 +193,27 @@ splitBtn.addEventListener("click", () => {
     }
 });
 
+// Coin buttons
+coinBtn5.addEventListener("click", () => {
+    coinButtonLogic(5);
+});
 
+coinBtn25.addEventListener("click", () => {
+    coinButtonLogic(25);
+});
 
-// Functions for modal window
-function modalTypeText(text) {
-    createModalWin(text);
-    const resetBtn = document.getElementById("resetBtn");
-    const modalWin = document.getElementById("modalWin");
-    const modalGuiWin = document.getElementById("modalGuiWin");
+coinBtn50.addEventListener("click", () => {
+    coinButtonLogic(50);
+});
 
-    resetBtn.addEventListener("click", () => {
-        modalWin.remove();
-        modalGuiWin.remove();
-        hitBtn.disabled = false;
-    });
-}
+coinBtn100.addEventListener("click", () => {
+    coinButtonLogic(100);
+});
 
-function modalWinClose(text) {
+coinBtn500.addEventListener("click", () => {
+    coinButtonLogic(500);
+});
 
-    createModalWin(text);
-    console.log("After: " + sumPlayerPoints1);
-
-    const resetBtn = document.getElementById("resetBtn");
-    const modalWin = document.getElementById("modalWin");
-    const playerWinsCounter = document.getElementById("playerWinsCounter");
-    const dealerWinsCounter = document.getElementById("dealerWinsCounter");
-   
-    resetBtn.addEventListener("click", () => {
-
-        dealerWinsCounter.textContent = "Dealer wins: " + dealerWins;
-        playerWinsCounter.textContent = "Your wins: " + playerWins;
-        content.innerHTML = "";
-        contentDealer.innerHTML = "";
-
-        modalWin.remove();
-        modalGuiWin.remove();
-
-        turnButtons(false);
-        splitTurn = false;
-
-        playerPoints = [[],[]];
-        dealerPoints = 0;
-        sumPlayerPoints1 = 0;
-        sumPlayerPoints2 = 0;
-        amountCardsPlayer = [];
-        amountCardsDealer = [];
-        playerA = [[],[]];
-        dealerA = [];
-        gameBank = 0;
-    });
-}
-
-function modalWinFinalClose(looseOrWin) {
-    createModalWin(looseOrWin);
-
-    const resetBtn = document.getElementById("resetBtn");
-    const modalWin = document.getElementById("modalWin");
-    const modalGuiWin = document.getElementById("modalGuiWin");
-            
-    resetBtn.addEventListener("click", () => {
-        let playerPointsCounter = document.getElementById("playerPointsCounter");
-        let dealerPointsCounter = document.getElementById("dealerPointsCounter");
-        playerPointsCounter.textContent = "Player points: 0";
-        dealerPointsCounter.textContent = "Dealer points: 0";
-
-        content.innerHTML = "";
-        modalWin.remove();                
-        modalGuiWin.remove();
-        cardsInDeck = 52;
-        deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
-        amountCardsPlayer = [];
-    });
-}
-
-
-// Functions for creating something
-function cardPlayer() {
-    cardCreatingElements("content", defineNumberPlayer(), defineSymbol(), defineColor());
-}
-
-function cardDealer() {
-    cardCreatingElements("contentDealer", defineNumberDealer(), defineSymbol(), defineColor());
-}
-
-function cardCreatingElements(id, number, symbol, color) {
-
-    // Creating BG of card
-    let contentDiv = document.getElementById(id);
-    let cardDiv = document.createElement("div");
-    cardDiv.classList.add("card");
-    contentDiv.appendChild(cardDiv);
-
-
-    // Creating number & symbol on top side of card
-    let topDiv = document.createElement("div");
-    topDiv.classList.add("top");
-    cardDiv.appendChild(topDiv);
-
-    createNumSym(number, symbol);
-    numberCard.classList.add(color);
-    symbolCard.classList.add(color);
-    topDiv.appendChild(numberCard);
-    topDiv.appendChild(symbolCard);
-
-
-    // Creating main symbol
-    createSymMain(symbol);
-    symbolMain.classList.add(color);
-    cardDiv.appendChild(symbolMain);
-
-
-    // Creating number & symbol on top side of card
-    let bottomDiv = document.createElement("div");
-    bottomDiv.classList.add("bottom");
-    cardDiv.appendChild(bottomDiv);
-
-    createNumSym(number, symbol);
-    numberCard.classList.add(color);
-    symbolCard.classList.add(color);
-    bottomDiv.appendChild(numberCard);
-    bottomDiv.appendChild(symbolCard);
-
-}
-
-function cardBackSideCreate(id) {
-    let contentDiv = document.getElementById(id);
-    let cardDiv = document.createElement("div");
-    cardDiv.classList.add("cardBack");
-    contentDiv.appendChild(cardDiv);
-} 
-
-function createModalWin(text) {
-    const mainDiv = document.getElementById("main");
-    let modalGuiDiv = document.createElement("div");
-    modalGuiDiv.id = "modalGuiWin";
-    mainDiv.appendChild(modalGuiDiv);
-    
-    let modalDiv = document.createElement("div");
-    modalDiv.classList.add("modalWin");
-    modalDiv.id = "modalWin";
-    modalGuiDiv.appendChild(modalDiv);
-
-    let paragraph = document.createElement("p");
-    paragraph.textContent = text;
-    modalDiv.appendChild(paragraph);
-
-    let resetBtn = document.createElement("button");
-    resetBtn.id = "resetBtn";
-    resetBtn.textContent = "Contine";
-    modalDiv.appendChild(resetBtn);
-}
-
-function createNumSym(number, symbol) {
-    numberCard = document.createElement("p");
-    numberCard.classList.add("number");
-    numberCard.textContent = number;
-
-    symbolCard = document.createElement("p")
-    symbolCard.classList.add("symbol")
-    symbolCard.textContent = symbol;
-}
-
-function createSymMain(symbol) {
-    symbolMain = document.createElement("p");
-    symbolMain.classList.add("symbolMain");
-    symbolMain.textContent = symbol;
-}
 
 function sumFunction() {
     let asd1 = 0;
@@ -385,4 +256,22 @@ function result(text) {
     modalWinClose(text);
 }
 
-export { numberCard, symbolCard, playerPoints, dealerPoints }
+function coinButtonLogic(value) {
+    if (playerBank >= value) {
+        playerBank -= value;
+        gameBank += value;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+}
+
+function turnButtons(boolean) {
+    for (i = 0; i < buttonsTable.length; i++) {
+        buttonsTable[i].disabled = boolean;
+    }    
+}
+
+export { buttonsTable, hitBtn, splitBtn, standBtn, numberCard, symbolCard, symbolMain, amountCardsPlayer, amountCardsDealer, playerPoints, dealerPoints, playerA, dealerA, sumPlayerPoints1, sumPlayerPoints2, playerWins,dealerWins, cardsInDeck, playerBank, gameBank }
