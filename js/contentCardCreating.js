@@ -1,6 +1,10 @@
 import { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor } from "./defineFunctions.js";
 
-// Functions for creating something
+let numberCard1 = numberCard;
+let symbolCard1 = symbolCard;
+let symbolMain1 = symbolMain;
+
+// Functions for creating cards content
 function cardPlayer() {
     cardCreatingElements("content", defineNumberPlayer(), defineSymbol(), defineColor());
 }
@@ -54,7 +58,7 @@ function cardBackSideCreate(id) {
     let cardDiv = document.createElement("div");
     cardDiv.classList.add("cardBack");
     contentDiv.appendChild(cardDiv);
-} 
+}
 
 function createNumSym(number, symbol) {
     numberCard = document.createElement("p");

@@ -1,22 +1,16 @@
-let numberCard = null;
-let symbolCard = null;
-let symbolMain = null;
+const hitBtn = document.getElementById("hitBtn");
+const standBtn = document.getElementById("standBtn");
+const splitBtn = document.getElementById("splitBtn");
 
-let amountCardsPlayer = [];
-let amountCardsDealer = [];
+const coinBtn5 = document.getElementById("coin5");
+const coinBtn25 = document.getElementById("coin25");
+const coinBtn50 = document.getElementById("coin50");
+const coinBtn100 = document.getElementById("coin100");
+const coinBtn500 = document.getElementById("coin500");
 
-let playerPoints = [[],[]];
-let dealerPoints = 0;
-let playerA = [[],[]];
-let dealerA = [];
+const buttonsTable = document.getElementsByTagName("button");
 
-let sumPlayerPoints1 = 0;
-let sumPlayerPoints2 = 0;
+let playerBankCounter = document.getElementById("playerBankCounter");
+let gameBankCounter = document.getElementById("gameBankCounter");
 
-let playerWins = 0;
-let dealerWins = 0;
-let cardsInDeck = 52;
-let playerBank = 500;
-let gameBank = 0;
-
-export { numberCard, symbolCard, symbolMain, amountCardsPlayer, amountCardsDealer, playerPoints, dealerPoints, playerA, dealerA, sumPlayerPoints1, sumPlayerPoints2, playerWins,dealerWins, cardsInDeck, playerBank, gameBank }
+export { hitBtn, splitBtn, standBtn, coinBtn5, coinBtn25, coinBtn50, coinBtn100, coinBtn500, buttonsTable, playerBankCounter, gameBankCounter }

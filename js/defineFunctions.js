@@ -1,8 +1,9 @@
-import { numberCard, symbolCard, playerPoints, dealerPoints, playerA, dealerA } from "./main.js";
+import { playerPoints, dealerPoints, amountCardsPlayer, amountCardsDealer, playerA, dealerA } from "./main.js";
 
 let numberCard = null;
 let symbolCard = null;
 let symbolMain = null;
+let colorCard = null;
 
 // Define functions: Number, Symbol, Color
 function defineNumberPlayer() {
@@ -162,7 +163,6 @@ function defineColor() {
     return colorCard;
 }
 
-// Functions for generating content of card
 function randomNumber() {
     let indexNum = Math.floor((Math.random()*(15-2)) + 2);
     return indexNum;
@@ -173,4 +173,4 @@ function randomSymbol() {
     return indexSym;
 }
 
-export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, randomNumber, randomSymbol, numberCard, symbolCard, symbolMain }
+export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, randomNumber, randomSymbol, numberCard, symbolCard, colorCard, symbolMain }
