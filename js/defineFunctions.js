@@ -1,5 +1,7 @@
+import { numberCard, symbolCard, playerPoints, dealerPoints } from "./vars.js";
+
 // Define functions: Number, Symbol, Color
-export function defineNumberPlayer() {
+function defineNumberPlayer() {
     let NumCard = randomNumber();
 
     if (NumCard <= 10) {
@@ -62,7 +64,7 @@ export function defineNumberPlayer() {
     return numberCard;
 }
 
-export function defineNumberDealer() {
+function defineNumberDealer() {
     let NumCard = randomNumber();
     
     if (NumCard <= 10) {
@@ -125,7 +127,7 @@ export function defineNumberDealer() {
     return numberCard;
 }
 
-export function defineSymbol() {
+function defineSymbol() {
     
     let SymCard = randomSymbol();
 
@@ -145,7 +147,7 @@ export function defineSymbol() {
     return symbolCard;
 }
 
-export function defineColor() {
+function defineColor() {
     if (symbolCard === "♠" || symbolCard === "♣") {
         colorCard = "colorBlack";
     }
@@ -156,8 +158,21 @@ export function defineColor() {
     return colorCard;
 }
 
-export function turnButtons(boolean) {
+function turnButtons(boolean) {
     for (i = 0; i < buttonsTable.length; i++) {
         buttonsTable[i].disabled = boolean;
     }    
 }
+
+// Functions for generating content of card
+function randomNumber() {
+    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
+    return indexNum;
+}
+
+function randomSymbol() {
+    let indexSym = Math.floor((Math.random()*(5-1)) + 1)
+    return indexSym;
+}
+
+export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, turnButtons, randomNumber, randomSymbol }

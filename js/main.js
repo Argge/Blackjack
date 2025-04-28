@@ -1,4 +1,6 @@
-// import { defineNumberPlayer, defineNumberDealer, defineColor, defineSymbol, turnButtons } from "./defineFunctions.js";
+import { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, turnButtons } from "./defineFunctions.js";
+import { numberCard, symbolCard, symbolMain, amountCardsPlayer, amountCardsDealer, playerPoints, dealerPoints, playerA, dealerA, sumPlayerPoints1, sumPlayerPoints2, playerWins,dealerWins, cardsInDeck, playerBank, gameBank } from "./vars.js";
+import { coinBtn5, coinBtn25, coinBtn50, coinBtn100, coinBtn500 } from "./coinButtons.js";
 
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
@@ -16,30 +18,9 @@ const buttonsTable = document.getElementsByTagName("button");
 let playerBankCounter = document.getElementById("playerBankCounter");
 let gameBankCounter = document.getElementById("gameBankCounter");
 
-let numberCard = null;
-let symbolCard = null;
-let symbolMain = null;
-
-let amountCardsPlayer = [];
-let amountCardsDealer = [];
-
-let playerPoints = [[],[]];
-let dealerPoints = 0;
-let playerA = [[],[]];
-let dealerA = [];
-
-let sumPlayerPoints1 = 0;
-let sumPlayerPoints2 = 0;
-
-let playerWins = 0;
-let dealerWins = 0;
-let cardsInDeck = 52;
-let playerBank = 500;
-let gameBank = 0;
-
 hitBtn.addEventListener("click", () => {
 
-    playerOrDealerWins = false; // if it's false then in result() is choosed playerWins, else it's true - dealerWins 
+    let playerOrDealerWins = false; // if it's false then in result() is choosed playerWins, else it's true - dealerWins 
 
     if (gameBank === 0) {
         hitBtn.disabled = true;
@@ -194,27 +175,6 @@ splitBtn.addEventListener("click", () => {
     else {
         splitBtn.disabled = false;
     }
-});
-
-// Coin buttons
-coinBtn5.addEventListener("click", () => {
-    coinButtonLogic(5);
-});
-
-coinBtn25.addEventListener("click", () => {
-    coinButtonLogic(25);
-});
-
-coinBtn50.addEventListener("click", () => {
-    coinButtonLogic(50);
-});
-
-coinBtn100.addEventListener("click", () => {
-    coinButtonLogic(100);
-});
-
-coinBtn500.addEventListener("click", () => {
-    coinButtonLogic(500);
 });
 
 
@@ -384,187 +344,6 @@ function createSymMain(symbol) {
     symbolMain.textContent = symbol;
 }
 
-// Functions for generating content of card
-function randomNumber() {
-    let indexNum = Math.floor((Math.random()*(15-2)) + 2);
-    return indexNum;
-}
-
-function randomSymbol() {
-    let indexSym = Math.floor((Math.random()*(5-1)) + 1)
-    return indexSym;
-}
-
-function randomColor() {
-    let indexCol = Math.floor((Math.random()*(3-1)) + 1);
-    return indexCol;
-}
-
-
-// Define functions: Number, Symbol, Color
-function defineNumberPlayer() {
-    let NumCard = randomNumber();
-
-    if (NumCard <= 10) {
-        if (NumCard === 2) {
-            numberCard = "2";
-        }
-        else if (NumCard === 3) {
-            numberCard = "3";
-        }
-        else if (NumCard === 4) {
-            numberCard = "4";
-        }
-        else if (NumCard === 5) {
-            numberCard = "5";
-        }
-        else if (NumCard === 6) {
-            numberCard = "6";
-        }
-        else if (NumCard === 7) {
-            numberCard = "7";
-        }
-        else if (NumCard === 8) {
-            numberCard = "8";
-        }
-        else if (NumCard === 9) {
-            numberCard = "9";
-        }
-        else {
-            numberCard = "10";
-        }
-    }
-    else if (NumCard === 11) {
-        numberCard = "J";
-    }
-    else if (NumCard === 12) {
-        numberCard = "Q";
-    }
-    else if (NumCard === 13) {
-        numberCard = "K";
-    }
-    else {
-        numberCard = "A";
-    }
-
-    if (NumCard <= 10) {
-        playerPoints[0].push(NumCard);
-    }
-    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        playerPoints[0].push(10);
-    }
-    else if (NumCard === 14 && amountCardsPlayer.length < 3) {
-        playerPoints[0].push(11);
-    }
-    else {
-        playerPoints[0].push(1);
-    }
-    console.log(playerPoints);
-    playerA[0].push(numberCard);
-
-    return numberCard;
-}
-
-function defineNumberDealer() {
-    let NumCard = randomNumber();
-    
-    if (NumCard <= 10) {
-        if (NumCard === 2) {
-            numberCard = "2";
-        }
-        else if (NumCard === 3) {
-            numberCard = "3";
-        }
-        else if (NumCard === 4) {
-            numberCard = "4";
-        }
-        else if (NumCard === 5) {
-            numberCard = "5";
-        }
-        else if (NumCard === 6) {
-            numberCard = "6";
-        }
-        else if (NumCard === 7) {
-            numberCard = "7";
-        }
-        else if (NumCard === 8) {
-            numberCard = "8";
-        }
-        else if (NumCard === 9) {
-            numberCard = "9";
-        }
-        else {
-            numberCard = "10";
-        }
-    }
-    else if (NumCard === 11) {
-        numberCard = "J";
-    }
-    else if (NumCard === 12) {
-        numberCard = "Q";
-    }
-    else if (NumCard === 13) {
-        numberCard = "K";
-    }
-    else {
-        numberCard = "A";
-    }
-
-    if (NumCard <= 10) {
-        dealerPoints += NumCard;
-    }
-    else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        dealerPoints += 10;
-    }
-    else if (NumCard === 14 && amountCardsDealer.length < 3) {
-        dealerPoints += 11;
-    }
-    else {
-        dealerPoints++;
-    }
-    console.log(dealerPoints);
-    dealerA.push(numberCard);
-
-    return numberCard;
-}
-
-function defineSymbol() {
-    
-    let SymCard = randomSymbol();
-
-        if (SymCard === 1) {
-            symbolCard = "♠";
-        }
-        else if (SymCard === 2) {
-            symbolCard = "♥";
-        }
-        else if (SymCard === 3) {
-            symbolCard = "♣";
-        }
-        else {
-            symbolCard = "♦";
-        }
-
-    return symbolCard;
-}
-
-function defineColor() {
-    if (symbolCard === "♠" || symbolCard === "♣") {
-        colorCard = "colorBlack";
-    }
-    else {
-        colorCard = "colorRed";
-    }
-
-    return colorCard;
-}
-
-function turnButtons(boolean) {
-    for (i = 0; i < buttonsTable.length; i++) {
-        buttonsTable[i].disabled = boolean;
-    }    
-}
-
 function sumFunction() {
     let asd1 = 0;
     let asd2 = 0;
@@ -606,14 +385,4 @@ function result(text) {
     modalWinClose(text);
 }
 
-function coinButtonLogic(value) {
-    if (playerBank >= value) {
-        playerBank -= value;
-        gameBank += value;
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-    }
-    else {
-        modalTypeText("You need more money!")
-    }
-}
+export { numberCard, symbolCard, playerPoints, dealerPoints }
