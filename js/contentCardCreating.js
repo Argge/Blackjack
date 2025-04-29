@@ -1,16 +1,23 @@
 import { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor } from "./defineFunctions.js";
 
-let numberCard1 = numberCard;
-let symbolCard1 = symbolCard;
-let symbolMain1 = symbolMain;
+// let numberCard = null;
+// let symbolCard = null;
+// let symbolMain = null;
+// let colorCard = null;
 
 // Functions for creating cards content
 function cardPlayer() {
-    cardCreatingElements("content", defineNumberPlayer(), defineSymbol(), defineColor());
+    const number = test(defineNumberPlayer);
+    const symbol = test(defineSymbol);
+    const color = defineColor(symbol);
+    cardCreatingElements("content", number, symbol, color);
 }
 
 function cardDealer() {
-    cardCreatingElements("contentDealer", defineNumberDealer(), defineSymbol(), defineColor());
+    const number = test(defineNumberDealer);
+    const symbol = test(defineSymbol);
+    const color = defineColor(symbol);
+    cardCreatingElements("contentDealer", number, symbol, color);
 }
 
 function cardCreatingElements(id, number, symbol, color) {
@@ -27,29 +34,29 @@ function cardCreatingElements(id, number, symbol, color) {
     topDiv.classList.add("top");
     cardDiv.appendChild(topDiv);
 
-    createNumSym(number, symbol);
-    numberCard.classList.add(color);
-    symbolCard.classList.add(color);
-    topDiv.appendChild(numberCard);
-    topDiv.appendChild(symbolCard);
+    const { numberEl: numberCardTop, symbolEl: symbolCardTop } = createNumSym(number, symbol);
+    numberCardTop.classList.add(color);
+    symbolCardTop.classList.add(color);
+    topDiv.appendChild(numberCardTop);
+    topDiv.appendChild(symbolCardTop);
 
 
     // Creating main symbol
-    createSymMain(symbol);
+    const symbolMain = createSymMain(symbol);
     symbolMain.classList.add(color);
     cardDiv.appendChild(symbolMain);
 
 
-    // Creating number & symbol on top side of card
+    // Creating number & symbol on bottom side of card
     let bottomDiv = document.createElement("div");
     bottomDiv.classList.add("bottom");
     cardDiv.appendChild(bottomDiv);
 
-    createNumSym(number, symbol);
-    numberCard.classList.add(color);
-    symbolCard.classList.add(color);
-    bottomDiv.appendChild(numberCard);
-    bottomDiv.appendChild(symbolCard);
+    const { numberEl: numberCardBottom, symbolEl: symbolCardBottom } = createNumSym(number, symbol);
+    numberCardBottom.classList.add(color);
+    symbolCardBottom.classList.add(color);
+    bottomDiv.appendChild(numberCardBottom);
+    bottomDiv.appendChild(symbolCardBottom);
 
 }
 
@@ -61,19 +68,31 @@ function cardBackSideCreate(id) {
 }
 
 function createNumSym(number, symbol) {
-    numberCard = document.createElement("p");
+    const numberCard = document.createElement("p");
     numberCard.classList.add("number");
     numberCard.textContent = number;
 
-    symbolCard = document.createElement("p")
-    symbolCard.classList.add("symbol")
+    const symbolCard = document.createElement("p");
+    symbolCard.classList.add("symbol");
     symbolCard.textContent = symbol;
+
+    return {
+        numberEl: numberCard,
+        symbolEl: symbolCard
+    };
 }
 
 function createSymMain(symbol) {
-    symbolMain = document.createElement("p");
+    const symbolMain = document.createElement("p");
     symbolMain.classList.add("symbolMain");
     symbolMain.textContent = symbol;
+
+    return symbolMain;
+}
+
+function test(func) {
+    return func();
 }
 
 export { cardPlayer, cardDealer, cardBackSideCreate }
+

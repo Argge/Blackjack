@@ -6,12 +6,13 @@ let amountCardsPlayer = [];
 let amountCardsDealer = [];
 
 let playerPoints = [[],[]];
-let dealerPoints = 0;
+let dealerPoints = [];
 let playerA = [[],[]];
 let dealerA = [];
 
 let sumPlayerPoints1 = 0;
 let sumPlayerPoints2 = 0;
+let sumDealerPoints = 0;
 
 let playerWins = 0;
 let dealerWins = 0;
@@ -42,6 +43,10 @@ hitBtn.addEventListener("click", () => {
 
             for(i = 0; i < playerPoints[0].length; i++) {
                 sumPlayerPoints1 += playerPoints[0][i];
+            }
+
+            for(i = 0; i < dealerPoints[0].length; i++) {
+                sumDealerPoints += dealerPoints[0][i];
             }
 
             // BLACKJACK
@@ -119,7 +124,7 @@ hitBtn.addEventListener("click", () => {
             }
         }
         console.log("Player: " + sumPlayerPoints1);
-        console.log("Dealer: " + dealerPoints);
+        console.log("Dealer: " + sumDealerPoints);
     }
 });
 

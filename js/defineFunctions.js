@@ -1,13 +1,9 @@
 import { playerPoints, dealerPoints, amountCardsPlayer, amountCardsDealer, playerA, dealerA } from "./main.js";
 
-let numberCard = null;
-let symbolCard = null;
-let symbolMain = null;
-let colorCard = null;
-
 // Define functions: Number, Symbol, Color
 function defineNumberPlayer() {
     let NumCard = randomNumber();
+    let numberCard = null;
 
     if (NumCard <= 10) {
         if (NumCard === 2) {
@@ -71,6 +67,7 @@ function defineNumberPlayer() {
 
 function defineNumberDealer() {
     let NumCard = randomNumber();
+    let numberCard = null;
     
     if (NumCard <= 10) {
         if (NumCard === 2) {
@@ -115,16 +112,16 @@ function defineNumberDealer() {
     }
 
     if (NumCard <= 10) {
-        dealerPoints += NumCard;
+        dealerPoints[0] += NumCard;
     }
     else if (NumCard === 11 || NumCard === 12 || NumCard === 13) {
-        dealerPoints += 10;
+        dealerPoints[0] += 10;
     }
     else if (NumCard === 14 && amountCardsDealer.length < 3) {
-        dealerPoints += 11;
+        dealerPoints[0] += 11;
     }
     else {
-        dealerPoints++;
+        dealerPoints[0]++;
     }
     console.log(dealerPoints);
     dealerA.push(numberCard);
@@ -133,8 +130,8 @@ function defineNumberDealer() {
 }
 
 function defineSymbol() {
-    
     let SymCard = randomSymbol();
+    let symbolCard = null;
 
         if (SymCard === 1) {
             symbolCard = "♠";
@@ -152,8 +149,9 @@ function defineSymbol() {
     return symbolCard;
 }
 
-function defineColor() {
-    if (symbolCard === "♠" || symbolCard === "♣") {
+function defineColor(symbol) {
+    let colorCard = null;
+    if (symbol === "♠" || symbol === "♣") {
         colorCard = "colorBlack";
     }
     else {
@@ -173,4 +171,4 @@ function randomSymbol() {
     return indexSym;
 }
 
-export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, randomNumber, randomSymbol, numberCard, symbolCard, colorCard, symbolMain }
+export { defineNumberPlayer, defineNumberDealer, defineSymbol, defineColor, randomNumber, randomSymbol }
