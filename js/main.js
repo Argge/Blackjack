@@ -90,7 +90,7 @@ hitBtn.addEventListener("click", () => {
             if (sumPlayerPoints1 === 21) {
                 gameBank *= 2;
                 playerOrDealerWins = false;
-                result("You win");
+                result("You win!");
             }
             // DEFAULT LOOSE
             else if (sumPlayerPoints1 > 21) {
@@ -158,20 +158,18 @@ standBtn.addEventListener("click", () => {
     }
 
     if (sumPlayerPoints1 > dealerPoints || sumPlayerPoints1 > dealerPoints && sumPlayerPoints2 > dealerPoints) {
+        playerOrDealerWins = false;
         gameBank *= 2;
-        playerBank += gameBank;
-        playerBankCounter.textContent = "Your bank: 0$";
-        modalWinClose("You win");
+        result("You win");
     }
     else if (dealerPoints > 21) {
+        playerOrDealerWins = false;
         gameBank *= 2;
-        playerBank += gameBank;
-        playerBankCounter.textContent = "Your bank: 0$";
-        modalWinClose("You win");
+        result("You win");
     }
     else {
-        modalWinClose("You loose");
-        playerBankCounter.textContent = "Your bank: 0$";
+        playerOrDealerWins = true;
+        result("You loose");
     }
 
     console.log("Dealer: " + dealerPoints);
@@ -252,19 +250,17 @@ function coinButtonLogic(value) {
 }
 
 function result(text) {
-    turnButtons(true);
+    turnButtons();
 
     if (playerOrDealerWins === false) {
         playerWins++;
+        playerBank += gameBank;
     }
-    else {
+    else if (playerOrDealerWins === true) {
         dealerWins++;
     }
     
-    if (text === "You win!" || text === "Blackjack!") {
-        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
-        playerBank += gameBank;
-    }
+    playerBankCounter.textContent = "Your bank: " + playerBank + "$";
     gameBankCounter.textContent = "Game bank: 0$";
 
     modalWinClose(text);
@@ -288,7 +284,7 @@ function modalWinClose(text) {
     createModalWin(text);
     console.log("After: " + playerPoints);
     playerPoints = [[],[]];
-    dealerPoints = 0;
+    dealerPoints = [];
     
     const resetBtn = document.getElementById("resetBtn");
     const modalWin = document.getElementById("modalWin");
@@ -307,6 +303,9 @@ function modalWinClose(text) {
         playerA = [[],[]];
         dealerA = [];
         gameBank = 0;
+        sumPlayerPoints1 = 0;
+        sumPlayerPoints2 = 0;
+        sumDealerPoints = 0;
         for (i = 0; i < buttonsTable.length; i++) {
             buttonsTable[i].disabled = false;
         }
