@@ -32,9 +32,9 @@ let cardsInDeck = 52;
 let playerBank = 500;
 let gameBank = 0;
 
-hitBtn.addEventListener("click", () => {
+let playerOrDealerWins = false; // if it's false then in result() is choosed playerWins, else it's true - dealerWins 
 
-    let playerOrDealerWins = false; // if it's false then in result() is choosed playerWins, else it's true - dealerWins 
+hitBtn.addEventListener("click", () => {
 
     if (gameBank === 0) {
         hitBtn.disabled = true;
@@ -90,7 +90,7 @@ hitBtn.addEventListener("click", () => {
             if (sumPlayerPoints1 === 21) {
                 gameBank *= 2;
                 playerOrDealerWins = false;
-                result("Dealer win");
+                result("You win");
             }
             // DEFAULT LOOSE
             else if (sumPlayerPoints1 > 21) {
