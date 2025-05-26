@@ -50,11 +50,13 @@ hitBtn.addEventListener("click", () => {
             amountCardsDealer.push(cardBackSideCreate("contentDealer"));
             cardsInDeck -= 2;
             deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
-            
-            sumPlayerPoints = playerPoints[0].reduce((acc, playerPoints) => acc + playerPoints[0]);
 
-            for(j = 0; j < playerPoints[1].length; j++) {
-                sumPlayerPoints += playerPoints[j]
+            for(i = 0; i < playerPoints[0].length; i++) {
+                sumPlayerPoints1 += playerPoints[0][i];
+            }
+
+            for(i = 0; i < dealerPoints[0].length; i++) {
+                sumDealerPoints += dealerPoints[0][i];
             }
 
             // BLACKJACK
