@@ -14,26 +14,23 @@ const buttonsTable = document.getElementsByTagName("button");
 let playerBankCounter = document.getElementById("playerBankCounter");
 let gameBankCounter = document.getElementById("gameBankCounter");
 
-let numberCard = null;
-let symbolCard = null;
-let symbolMain = null;
-
 let amountCardsPlayer = [];
 let amountCardsDealer = [];
 
 let playerPoints = [[],[]];
-let dealerPoints = 0;
+let dealerPoints = [];
+let playerA = [[],[]];
+let dealerA = [];
 
-let sumPlayerPoints = 0;
+let sumPlayerPoints1 = 0;
+let sumPlayerPoints2 = 0;
+let sumDealerPoints = 0;
 
 let playerWins = 0;
 let dealerWins = 0;
 let cardsInDeck = 52;
 let playerBank = 500;
 let gameBank = 0;
-
-let dealerA = [];
-let playerA = [[],[]];
 
 hitBtn.addEventListener("click", () => {
 
