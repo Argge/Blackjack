@@ -242,6 +242,17 @@ function sumFunction() {
     }
 }
 
+function coinButtonLogic(value) {
+    if (playerBank >= value) {
+        playerBank -= value;
+        gameBank += value;
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    }
+    else {
+        modalTypeText("You need more money!")
+    }
+}
 
 // Functions for modal window
 function modalTypeText(text) {
