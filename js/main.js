@@ -251,6 +251,25 @@ function coinButtonLogic(value) {
     }
 }
 
+function result(text) {
+    turnButtons(true);
+
+    if (playerOrDealerWins === false) {
+        playerWins++;
+    }
+    else {
+        dealerWins++;
+    }
+    
+    if (text === "You win!" || text === "Blackjack!") {
+        playerBankCounter.textContent = "Your bank: " + playerBank + "$";
+        playerBank += gameBank;
+    }
+    gameBankCounter.textContent = "Game bank: 0$";
+
+    modalWinClose(text);
+}
+
 // Functions for modal window
 function modalTypeText(text) {
     createModalWin(text);
@@ -587,7 +606,7 @@ function defineColor() {
     return colorCard;
 }
 
-function turnOffButtons() {
+function turnButtons() {
     for (i = 0; i < buttonsTable.length; i++) {
         buttonsTable[i].disabled = true;
     }    
