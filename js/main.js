@@ -304,7 +304,7 @@ function modalWinClose(text) {
         modalGuiWin.remove();
         amountCardsPlayer = [];
         amountCardsDealer = [];
-        playerA = [];
+        playerA = [[],[]];
         dealerA = [];
         gameBank = 0;
         for (i = 0; i < buttonsTable.length; i++) {
@@ -451,6 +451,7 @@ function randomColor() {
 // Define functions: Number, Symbol, Color
 function defineNumberPlayer() {
     let NumCard = randomNumber();
+    let numberCard = null;
 
     if (NumCard <= 10) {
         if (NumCard === 2) {
