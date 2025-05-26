@@ -57,16 +57,6 @@ hitBtn.addEventListener("click", () => {
                 sumPlayerPoints += playerPoints[j]
             }
 
-            // for(i = 0; i < playerPoints[0].length; i++) {
-            //     // sumPlayerPoints += playerPoints[i];
-
-            //     for(j = 0; j < playerPoints[1].length; j++) {
-            //         sumPlayerPoints += playerPoints[i] + playerPoints[j]
-            //     }
-            // }
-
-
-
             // BLACKJACK
             if (playerPoints === 21) {
                 turnOffButtons();
