@@ -12,9 +12,10 @@ body {
     background-size: cover;
 }
 
-.main {
+main {
     width: 100%;
     height: 100%;
+
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -24,6 +25,7 @@ body {
 .cardsMain {
     width: 100%;
     height: 70%;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,69 +33,21 @@ body {
     gap: 130px;
 }
 
-.content {
+#playerLand {
     height: 200px;
+
     display: flex;
     align-items: center;
     gap: 30px;
 }
 
-/* CARD */
-
-.card {
-    width: 200px;
-    height: 300px;
-    background-color: #fff;
-    border-radius: 12px;
-    font-size: 23px;
+#dealerLand {
+    height: 200px;
+    
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    box-shadow: 0 0 10px 5px rgba(17, 17, 17, 0.3);
-    background-image: url("../img/card_texture.avif");
-    background-blend-mode:darken
+    gap: 30px;
 }
-
-.cardBack {
-    width: 200px;
-    height: 300px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px 5px rgba(17, 17, 17, 0.3);
-    background-image: url("../img/back_side_card.jpg");
-    background-position: center;
-    background-size: 100% 102%;
-    background-blend-mode:darken;
-}
-
-.symbolMain {
-    font-size: 100px;
-}
-
-.top {
-    position: relative;
-    right: 80px;
-    top: 3px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.bottom {
-    position: relative;
-    left: 80px;
-    bottom: 3px;
-    rotate: 180deg;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.symbol {
-    font-size: 38px;
-}
-
-
 
 /* BUTTON */
 
@@ -109,235 +63,3 @@ body {
 .randomBtn:hover {
     background-color: #1d1d1d;
 }
-
-
-
-.randomBtnCard {
-    width: 190px;
-    height: 265px;
-    background-color: #fff;
-    border-radius: 12px;
-    box-shadow: 0 0 10px 5px rgba(17, 17, 17, 0.3);
-    background-image: url("../img/back_side_card.jpg");
-    background-position: center;
-    background-size: 100%;
-    background-blend-mode:darken;
-    border: 0;
-    z-index: 1;
-}
-
-.randomBtnCard:hover {
-    /* background-blend-mode:screen; */
-    filter: brightness(1.1);
-}
-
-/* BUTTON */
-
-
-
-.colorRed {
-    color: #ff0000;
-}
-
-.colorBlack {
-    color: #000;
-}
-
-
-/* MODAL WINDOW */
-
-.modalWin {
-    width: 200px;
-    height: 150px;
-    backdrop-filter: blur(5px);
-    box-shadow: 0 0 5px 10px rgba(0, 0, 0, .1);
-    color: #fff;
-    font-size: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 20px;
-    gap: 20px;
-}
-
-#resetBtn {
-    width: 110px;
-    height: 30px;
-    background-color: #b6b6b6;
-    color: #fff;
-    border: 0;
-    border-radius: 15px;
-}
-
-#resetBtn:hover {
-    background-color: #929292;
-}
-
-#modalGuiWin {
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* MODAL WINDOW */
-
-
-
-/* GUI */
-.gui {
-    width: 100%;
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    
-    color: #fff;
-    font-size: 20px;
-    gap: 30px;
-}
-
-.counters {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-left: 20px;
-}
-
-#deckCardsCounter {
-    margin-left: 20px;
-}
-/* GUI */
-
-
-
-/* GUI BOTTOM */
-
-.guiBottom {
-    width: 100%;
-    height: 100vh;
-    position: absolute;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-}
-
-#headerBottom {
-    width: 100%;
-    height: 100px;
-    background-color: #505050;
-    display: flex;
-    justify-content: space-between;
-    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, .3);
-}
-
-#money {
-    width: 600px;
-    height: 100%;
-    background-color: #1d1d1d;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 0 10px 10px 0;
-}
-
-#mainButtons {
-    width: 450px;
-    height: 100%;
-    display: flex;
-
-}
-
-.coinBtn {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 0;
-    background-image: url("../img/poker_coin.png");
-    background-position: center;
-    background-size: 155%;
-    color: #fff;
-    font-size: 20px;
-}
-
-.mainBtn {
-    width: 150px;
-    height: 100%;
-    border: 0;
-    color: #fff;
-    font-size: 20px;
-    box-shadow: inset 0 0 20px 0px rgba(0, 0, 0, .3);
-    background-image: url("../img/card_texture.avif");
-    background-blend-mode: multiply;
-}
-
-.mainBtn:hover {
-    filter: brightness(1.2);
-}
-
-#hitBtn {
-    background-color: #ffc037;
-    border-radius: 10px 0 0 10px;
-}
-
-#splitBtn {
-    background-color: #059257;
-}
-
-#doubleBtn {
-    background-color: #d47e63;
-}
-
-#standBtn {
-    background-color: #940b06;
-}
-
-#coin1 {
-    filter: hue-rotate(220deg);
-}
-
-#coin1:hover {
-    filter: hue-rotate(220deg) brightness(1.5);
-}
-
-#coin5 {
-    filter: hue-rotate(100deg);
-}
-
-#coin5:hover {
-    filter: hue-rotate(100deg) brightness(1.5);
-}
-
-#coin25:hover {
-    filter: brightness(1.5);
-}
-
-#coin50 {
-    filter: hue-rotate(70deg);
-}
-
-#coin50:hover {
-    filter: hue-rotate(70deg) brightness(1.5);
-}
-
-#coin100 {
-    filter: saturate(0);
-}
-
-#coin100:hover {
-    filter: saturate(0) brightness(1.5); 
-}
-
-#coin500 {
-    filter: hue-rotate(300deg);
-}
-
-#coin500:hover {
-    filter: hue-rotate(300deg) brightness(1.5);
-}
-
-/* GUI BOTTOM */

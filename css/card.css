@@ -1,0 +1,65 @@
+.card {
+    width: 200px;
+    height: 300px;
+
+    background-color: #fff;
+    border-radius: 12px;
+    font-size: 23px;
+    box-shadow: 0 0 10px 5px rgba(17, 17, 17, 0.3);
+    background-image: url("../img/card_texture.avif");
+    background-blend-mode: darken;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardBack {
+    width: 200px;
+    height: 300px;
+
+    border-radius: 12px;
+    box-shadow: 0 0 10px 5px rgba(17, 17, 17, 0.3);
+    background-image: url("../img/back_side_card.jpg");
+    background-position: center;
+    background-size: 100% 102%;
+    background-blend-mode:darken;
+}
+
+.symbolMain {
+    font-size: 100px;
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+    right: 80px;
+    top: 3px;
+}
+
+.bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: relative;
+    left: 80px;
+    bottom: 3px;
+    rotate: 180deg;
+}
+
+.symbol {
+    font-size: 38px;
+}
+
+.colorRed {
+    color: #ff0000;
+}
+
+.colorBlack {
+    color: #000;
+}

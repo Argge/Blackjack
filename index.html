@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blackjack</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/coins.css">
+    <link rel="stylesheet" href="css/bottom-ui.css">
+    <link rel="stylesheet" href="css/messege-window.css">
+    <link rel="stylesheet" href="css/card.css">
+    <link rel="stylesheet" href="css/ui.css">
 </head>
 <body>
-    <div class="main" id="main">
-        <div class="guiBottom">
+    <main>
+        <div id="bottomUi">
             <div id="headerBottom">
-                <div id="money">
+                <div id="coins">
                     <button class="coinBtn" id="coin5">5</button>
                     <button class="coinBtn" id="coin25">25</button>
                     <button class="coinBtn" id="coin50">50</button>
@@ -24,20 +29,21 @@
                 </div>
             </div>
         </div>
-        <div class="gui" id="gui">
-            <div class="counters">
+        <div id="ui">
+            <div id="counters">
                 <p id="playerWinsCounter">Your wins: 0</p>
                 <p id="dealerWinsCounter">Dealer wins: 0</p>
                 <p id="playerBankCounter">Your bank: 500$</p>
                 <p id="gameBankCounter">Game bank: 0$</p>
             </div>
-            <p id="deckCardsCounter">Cards in deck: 52</p>
         </div>
-        <div class="cardsMain">
-            <div class="content" id="contentDealer"></div>
-            <div class="content" id="content"></div>
+        <div id="lands">
+            <div id="dealerLand"></div>
+            <div id="playerLand"></div>
         </div>
-    </div>
+    </main>
 </body>
-<script src="js/main.js"></script>
+<script type="module" src="js/main.js"></script>
+<script type="module" src="js/card.js"></script>
+<script type="module" src="js/random-number.js"></script>
 </html>
