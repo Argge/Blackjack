@@ -6,6 +6,8 @@ import { pointsCheck } from "./points-check.js";
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
 const splitBtn = document.getElementById("splitBtn");
+let playerCounter = document.getElementById("playerCounter");
+let betCounter = document.getElementById("betCounter");
 
 const coinsBtn = [
     document.getElementById("coin5"),
@@ -16,7 +18,7 @@ const coinsBtn = [
 ];
 
 let game = {
-    bank: 0
+    bet: 0
 }
 
 hitBtn.addEventListener("click", () => {
@@ -44,21 +46,27 @@ hitBtn.addEventListener("click", () => {
 
             if (player.points === 21) {
                 player.wins++;
-                player.bank += (game.bank * 2.5);
+                player.bank += (game.bet * 2.5);
 
                 player.points = 0;
                 player.cards = [];
-
                 dealer.points = 0;
                 player.cards = [];
-
                 game.bank = 0;
 
                 messegeWindow.open("Blackjack!");
+
+                playerCounter.textContent = `BANK: ${player.bank}$`;
+                betCounter.textContent = "BET: 0$";
             }
         }
         else if (player.cards.length > 1 && player.cards.length !== 5) {
             player.cards.push(new Card("playerLand"));
+
+            const isAceCard = Object.values(player.cards).find(card => card.value === 11);
+            if (isAceCard && player.cards.length > 2) isAceCard.value = 1;
+
+            // player.points += (player.cards[0].value + player.cards[1].value);
 
             const currentCardIndex = (player.cards.length - 1);
             player.cards[currentCardIndex].render();
@@ -228,16 +236,22 @@ splitBtn.addEventListener("click", () => {
     }
 });
 
-// Coin buttons
-coinsBtn[0].addEventListener("click", () => {
-    game.bank += 5;
-    player.bank -= 5;
+function bet(value) {
+    game.bet += value;
+    player.bank -= value;
+    playerCounter.textContent = `BANK: ${player.bank}$`;
+    betCounter.textContent = `BET: ${game.bet}$`;
 
-    console.log(game.bank);
+    console.log(game.bet);
     console.log(player.bank);
-});
+}
 
-
+// Coin buttons
+coinsBtn[0].addEventListener("click", () => { bet(25) });
+coinsBtn[1].addEventListener("click", () => { bet(50) });
+coinsBtn[2].addEventListener("click", () => { bet(100) });
+coinsBtn[3].addEventListener("click", () => { bet(250) });
+coinsBtn[4].addEventListener("click", () => { bet(500) });
 
 function turnButtons() {
     for (i = 0; i < buttonsTable.length; i++) {
