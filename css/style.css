@@ -34,7 +34,8 @@ main {
 }
 
 #playerLand {
-    height: 200px;
+    height: 300px;
+    margin-top: 20px;
 
     display: flex;
     align-items: center;
@@ -42,7 +43,8 @@ main {
 }
 
 #dealerLand {
-    height: 200px;
+    height: 300px;
+    margin-bottom: 20px;
     
     display: flex;
     align-items: center;

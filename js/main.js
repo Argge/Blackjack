@@ -1,12 +1,11 @@
 import { player, dealer } from "./entities.js";
 import { messegeWindow } from "./messege-window.js";
 import { Card } from "./card.js";
+import { pointsCheck } from "./points-check.js";
 
 const hitBtn = document.getElementById("hitBtn");
 const standBtn = document.getElementById("standBtn");
 const splitBtn = document.getElementById("splitBtn");
-
-const buttonsTable = document.getElementsByTagName("button");
 
 const coinsBtn = [
     document.getElementById("coin5"),
@@ -16,126 +15,164 @@ const coinsBtn = [
     document.getElementById("coin500")
 ];
 
-let gameBank = 0;
+let game = {
+    bank: 0
+}
 
 hitBtn.addEventListener("click", () => {
 
-    if (gameBank === 0) {
-        buttonsTable.disabled = true;
-        messegeWindow.openClose("Did a bet");
+    if (game.bank === 0) {
+        messegeWindow.open("Did a bet!")
     }
     else {
-        player.cards.push(new Card);
-        player.cards.push(new Card);
-        player.cards[0].player();
-        player.cards[1].player();
+        if (player.cards.length === 0) {
+            player.cards.push(new Card("playerLand"));
+            player.cards.push(new Card("playerLand"));
+            dealer.cards.push(new Card("dealerLand"));
+            dealer.cards.push(new Card("dealerLand"));    
 
-        dealer.cards.push(new Card);
-        dealer.cards[0].dealer();
-    }
+            player.cards[0].render();
+            player.cards[1].render();
+            dealer.cards[0].render();
+            dealer.cards[1].none();
 
-    if (gameBank === 0) {
-        hitBtn.disabled = true;
-        splitBtn.disabled = true;
-        standBtn.disabled = true;
-        modalTypeText("Did a bet");
-    }
-    else {
-        if (amountCardsPlayer.length < 1) {
+            player.points += (player.cards[0].value + player.cards[1].value);
+            dealer.points += (dealer.cards[0].value + dealer.cards[1].value);
 
-            amountCardsPlayer.push(cardPlayer());
-            amountCardsPlayer.push(cardPlayer());
-            amountCardsDealer.push(cardDealer());
-            amountCardsDealer.push(cardBackSideCreate("contentDealer"));
+            console.log(`Dealer: ${dealer.points}`);
+            console.log(`Player: ${player.points}`);
 
-            cardsInDeck -= 2;
-            deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+            if (player.points === 21) {
+                player.wins++;
+                player.bank += (game.bank * 2.5);
 
-            for(i = 0; i < playerPoints[0].length; i++) {
-                sumPlayerPoints1 += playerPoints[0][i];
-            }
+                player.points = 0;
+                player.cards = [];
 
-            for(i = 0; i < dealerPoints[0].length; i++) {
-                sumDealerPoints += dealerPoints[0][i];
-            }
+                dealer.points = 0;
+                player.cards = [];
 
-            // BLACKJACK
-            if (sumPlayerPoints1 === 21) {
-                playerOrDealerWins = false;
-                gameBank *= 2.5;
-                result("Blackjack!");
-            }
-            // DOUBLE A
-            else if (sumPlayerPoints1 === 22) {
-                playerOrDealerWins = false;
-                gameBank *= 2.5;
-                result("Blackjack!");            
-            }
-            else {}
-        }
-        else {
-            const content = document.getElementById("content");
-            const contentDealer = document.getElementById("contentDealer")
-            
-            cardsInDeck--;
-            let deckCardsCounter = document.getElementById("deckCardsCounter");
-            deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+                game.bank = 0;
 
-            amountCardsPlayer.push(cardPlayer());
-            sumFunction();
-            
-            // DEFAULT WIN
-            if (sumPlayerPoints1 === 21) {
-                gameBank *= 2;
-                playerOrDealerWins = false;
-                result("You win!");
-            }
-            // DEFAULT LOOSE
-            else if (sumPlayerPoints1 > 21) {
-                playerOrDealerWins = true;
-                result("Dealer win");
-            }
-            else {}
-
-            // IF SPLIT MODE IS TURN ON
-            if (splitTurn === true) {
-                amountCardsPlayer.push(cardPlayer());
-                amountCardsPlayer.push(cardPlayer());
-                playerPoints[1].push(playerPoints[0].pop());
-
-                sumFunction();
-
-                if (sumPlayerPoints1 > 21 || sumPlayerPoints2 > 21) {
-                    gameBank /= 2;
-                    gameBankCounter.textContent = "Game bank: " + gameBank + "$";
-                }
-                else if (sumPlayerPoints1 > 21 && sumPlayerPoints2 > 21) {
-                    playerOrDealerWins = true;
-                    result("Dealer win");
-                }
-                else if (sumPlayerPoints1 === 21 && sumPlayerPoints2 === 21) {
-                    playerOrDealerWins = false;
-                    gameBank *= 3.5;
-                    result("You win!");
-                }
-                else {
-                    amountCardsPlayer.push(cardPlayer());
-                }
-
-                // THE END
-                if (cardsInDeck === 0) {
-                    if (playerWins > dealerWins) {
-                        modalWinFinalClose("You win game!");
-                    }
-                    else {
-                        modalWinFinalClose("You loose game!");
-                    }
-                }
+                messegeWindow.open("Blackjack!");
             }
         }
-        console.log("Player: " + sumPlayerPoints1);
-        console.log("Dealer: " + sumDealerPoints);
+        else if (player.cards.length > 1 && player.cards.length !== 5) {
+            player.cards.push(new Card("playerLand"));
+
+            const currentCardIndex = (player.cards.length - 1);
+            player.cards[currentCardIndex].render();
+            player.points += player.cards[currentCardIndex].value;
+
+            console.log(`Dealer: ${dealer.points}`);
+            console.log(`Player: ${player.points}`);
+
+            pointsCheck();
+        }
     }
+
+    // if (gameBank === 0) {
+    //     hitBtn.disabled = true;
+    //     splitBtn.disabled = true;
+    //     standBtn.disabled = true;
+    //     modalTypeText("Did a bet");
+    // }
+    // else {
+    //     if (amountCardsPlayer.length < 1) {
+
+    //         amountCardsPlayer.push(cardPlayer());
+    //         amountCardsPlayer.push(cardPlayer());
+    //         amountCardsDealer.push(cardDealer());
+    //         amountCardsDealer.push(cardBackSideCreate("contentDealer"));
+
+    //         cardsInDeck -= 2;
+    //         deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+
+    //         for(i = 0; i < playerPoints[0].length; i++) {
+    //             sumPlayerPoints1 += playerPoints[0][i];
+    //         }
+
+    //         for(i = 0; i < dealerPoints[0].length; i++) {
+    //             sumDealerPoints += dealerPoints[0][i];
+    //         }
+
+    //         // BLACKJACK
+    //         if (sumPlayerPoints1 === 21) {
+    //             playerOrDealerWins = false;
+    //             gameBank *= 2.5;
+    //             result("Blackjack!");
+    //         }
+    //         // DOUBLE A
+    //         else if (sumPlayerPoints1 === 22) {
+    //             playerOrDealerWins = false;
+    //             gameBank *= 2.5;
+    //             result("Blackjack!");            
+    //         }
+    //         else {}
+    //     }
+    //     else {
+    //         const content = document.getElementById("content");
+    //         const contentDealer = document.getElementById("contentDealer")
+            
+    //         cardsInDeck--;
+    //         let deckCardsCounter = document.getElementById("deckCardsCounter");
+    //         deckCardsCounter.textContent = "Cards in deck: " + cardsInDeck;
+
+    //         amountCardsPlayer.push(cardPlayer());
+    //         sumFunction();
+            
+    //         // DEFAULT WIN
+    //         if (sumPlayerPoints1 === 21) {
+    //             gameBank *= 2;
+    //             playerOrDealerWins = false;
+    //             result("You win!");
+    //         }
+    //         // DEFAULT LOOSE
+    //         else if (sumPlayerPoints1 > 21) {
+    //             playerOrDealerWins = true;
+    //             result("Dealer win");
+    //         }
+    //         else {}
+
+    //         // IF SPLIT MODE IS TURN ON
+    //         if (splitTurn === true) {
+    //             amountCardsPlayer.push(cardPlayer());
+    //             amountCardsPlayer.push(cardPlayer());
+    //             playerPoints[1].push(playerPoints[0].pop());
+
+    //             sumFunction();
+
+    //             if (sumPlayerPoints1 > 21 || sumPlayerPoints2 > 21) {
+    //                 gameBank /= 2;
+    //                 gameBankCounter.textContent = "Game bank: " + gameBank + "$";
+    //             }
+    //             else if (sumPlayerPoints1 > 21 && sumPlayerPoints2 > 21) {
+    //                 playerOrDealerWins = true;
+    //                 result("Dealer win");
+    //             }
+    //             else if (sumPlayerPoints1 === 21 && sumPlayerPoints2 === 21) {
+    //                 playerOrDealerWins = false;
+    //                 gameBank *= 3.5;
+    //                 result("You win!");
+    //             }
+    //             else {
+    //                 amountCardsPlayer.push(cardPlayer());
+    //             }
+
+    //             // THE END
+    //             if (cardsInDeck === 0) {
+    //                 if (playerWins > dealerWins) {
+    //                     modalWinFinalClose("You win game!");
+    //                 }
+    //                 else {
+    //                     modalWinFinalClose("You loose game!");
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     console.log("Player: " + sumPlayerPoints1);
+    //     console.log("Dealer: " + sumDealerPoints);
+    // }
 });
 
 standBtn.addEventListener("click", () => {
@@ -192,7 +229,13 @@ splitBtn.addEventListener("click", () => {
 });
 
 // Coin buttons
-coinsBtn[0].addEventListener("click", () => {});
+coinsBtn[0].addEventListener("click", () => {
+    game.bank += 5;
+    player.bank -= 5;
+
+    console.log(game.bank);
+    console.log(player.bank);
+});
 
 
 
@@ -201,3 +244,5 @@ function turnButtons() {
         buttonsTable[i].disabled = true;
     }    
 }
+
+export { game }

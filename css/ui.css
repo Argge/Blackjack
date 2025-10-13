@@ -5,17 +5,18 @@
     position: absolute;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     
     color: #fff;
-    font-size: 20px;
-    gap: 30px;
 }
 
 #counters {
+    position: absolute;
+    font-size: 20px;
+    left: 20px;
+
     display: flex;
     flex-direction: column;
     gap: 10px;
-    position: relative;
-    top: 50%;
-    left: 20px;
 }

@@ -7,7 +7,6 @@ const player = {
 
 const dealer = {
     points: 0,
-    wins: 0,
     cards: []
 }
 

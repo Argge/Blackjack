@@ -1,22 +1,17 @@
 import { randomNumber } from "./random-number.js";
 
 class Card {
+    constructor(land) {
+        this.land = land
+    }
     value = 0;
 
-    player = () => {
+    render = () => {
         const cardParametrs = defineCardParametrs();
 
         this.value = cardParametrs.value;
 
-        cardRender("playerLand", cardParametrs.symbol, cardParametrs.symbolMain, cardParametrs.suit, cardParametrs.color);
-    }
-
-    dealer = () => {
-        const cardParametrs = defineCardParametrs();
-
-        this.value = cardParametrs.value;
-
-        cardRender("dealerLand", cardParametrs.symbol, cardParametrs.symbolMain, cardParametrs.suit, cardParametrs.color);    
+        cardRender(this.land, cardParametrs.symbol, cardParametrs.symbolMain, cardParametrs.suit, cardParametrs.color);
     }
 
     none = () => {
@@ -89,16 +84,18 @@ function defineCardParametrs() {
     else if (value === 13) cardParametrs.symbolMain = "K";
     else cardParametrs.symbolMain = suitMap[suit];
 
-    if (suit === 1 || suit === 2) cardParametrs.color = "red";
-    else cardParametrs.color = "black";
+    if (suit === 1 || suit === 2) cardParametrs.color = "colorRed";
+    else cardParametrs.color = "colorBlack";
 
     return cardParametrs;
 }
 
 function cardRender(land, symbol, symbolMain, suit, color) {
+    const landName = document.getElementById(land);
+
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card");
-    land.appendChild(cardDiv);
+    landName.appendChild(cardDiv);
 
     // Top
     const topDiv = document.createElement("div");
@@ -112,6 +109,7 @@ function cardRender(land, symbol, symbolMain, suit, color) {
 
     const suitCardTop = document.createElement("p");
     suitCardTop.textContent = suit;
+    suitCardTop.classList.add("suit");
     suitCardTop.classList.add(color);
     topDiv.appendChild(suitCardTop);
 
@@ -119,6 +117,7 @@ function cardRender(land, symbol, symbolMain, suit, color) {
     // Midle 
     const symbolCardMain = document.createElement("p");
     symbolCardMain.textContent = symbolMain;
+    symbolCardMain.classList.add("symbolMain");
     symbolCardMain.classList.add(color);
     cardDiv.appendChild(symbolCardMain);
 
@@ -135,6 +134,7 @@ function cardRender(land, symbol, symbolMain, suit, color) {
 
     const suitCardBottom = document.createElement("p");
     suitCardBottom.textContent = suit;
+    suitCardBottom.classList.add("suit");
     suitCardBottom.classList.add(color);
     bottomDiv.appendChild(suitCardBottom);
 }
