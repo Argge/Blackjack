@@ -20,6 +20,11 @@ class Card {
         cardDiv.classList.add("cardBack");
         contentDiv.appendChild(cardDiv);
     }
+
+    remove = () => {
+        const contentDiv = document.getElementById("dealerLand");
+        contentDiv.removeChild(contentDiv.lastChild);
+    }
 }
 
 function defineCardParametrs() {

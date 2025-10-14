@@ -11,12 +11,58 @@
     color: #fff;
 }
 
-#counters {
+/* PLAYER BLOCK */
+#playerBlock {
+    height: 40px;
+
     position: absolute;
-    font-size: 20px;
-    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    top: 20px;
+    left: 10px
+}
+
+#profileLogo {
+    width: 60px;
+    height: 60px;
+
+    object-fit: cover;
+    background-color: aqua;
+    border-radius: 50%;
+}
+
+#counterBg {
+    width: 150px;
+    height: 60px;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    border-radius: 13px;
+    border: 1px solid rgba(255, 255, 255, .3);
+    font-size: 25px;
 
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+#counters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 20px;
+}
+
+#betCounter {
+    position: absolute;
+    top: 20px;
+    font-size: 30px;
+}
+
+#playerPointsCounter {
+    position: absolute;
+    bottom: 130px;
 }

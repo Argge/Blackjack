@@ -1,8 +1,10 @@
 const player = {
     points: 0,
     wins: 0,
+    bank: 1000,
     cards: [],
-    bank: 1000
+    split1: [],
+    split2: []
 }
 
 const dealer = {

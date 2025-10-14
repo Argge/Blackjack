@@ -10,6 +10,8 @@ body {
     background-color: green;
     background-image: url("../img/background.jpg");
     background-size: cover;
+    /* background-size: 80%; */
+    background-position: center;
 }
 
 main {
@@ -39,6 +41,7 @@ main {
 
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 30px;
 }
 
@@ -48,6 +51,7 @@ main {
     
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 30px;
 }
 

@@ -1,5 +1,10 @@
+import { game } from "./main.js";
+
 export const messegeWindow = {
     open: (messege) => {
+        let buttons = document.querySelectorAll(".mainBtn, .coinBtn");
+        Array.from(buttons).forEach(button => button.disabled = true);
+
         const uiDiv = document.getElementById("ui");
         
         const windowDiv = document.createElement("div");
@@ -25,6 +30,8 @@ export const messegeWindow = {
 
             dealerLand.innerHTML = "";
             playerLand.innerHTML = "";
+            game.isOver = false;
+            Array.from(buttons).forEach(button => button.disabled = false);
         });
     }
 }
