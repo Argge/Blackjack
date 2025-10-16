@@ -85,6 +85,48 @@ hitBtn.addEventListener("click", () => {
 
             setTimeout(() => { playerPointsCheck() }, 100);
         }
+        else if (split.isActive === true && split.turn === false) {
+            if (player.split1.length !== 5) {
+                const newCard = new Card("playerLand");
+                player.split1.push(newCard);
+                newCard.render();
+                if (newCard.value === 11) newCard.value = 1;
+
+                const isAceCard = player.split1.find(card => card.value === 11);
+                if (isAceCard && player.split1.length >= 2) {
+                    isAceCard.value = 1;
+                    player.points -= 10;
+                    console.log(isAceCard.value);
+                }
+                player.points += newCard.value;
+
+                console.log(player.cards);
+                console.log(`Dealer: ${dealer.points}`);
+                console.log(`Player: ${player.points}`);
+
+                setTimeout(() => { playerPointsCheck() }, 100); 
+            }
+            else if (split.isActive === true && split.turn === true) {
+                const newCard = new Card("playerLand");
+                player.split2.push(newCard);
+                newCard.render();
+                if (newCard.value === 11) newCard.value = 1;
+
+                const isAceCard = player.split2.find(card => card.value === 11);
+                if (isAceCard && player.split2.length >= 2) {
+                    isAceCard.value = 1;
+                    player.points -= 10;
+                    console.log(isAceCard.value);
+                }
+                player.points += newCard.value;
+
+                console.log(player.cards);
+                console.log(`Dealer: ${dealer.points}`);
+                console.log(`Player: ${player.points}`);
+
+                setTimeout(() => { playerPointsCheck() }, 100);    
+            }
+        }
     }
 });
 
@@ -111,9 +153,13 @@ standBtn.addEventListener("click", () => {
     dealerTurn();
 });
 
-let splitTurn = false;
+let split = { 
+    isActive: false,
+    turn: false
+}
 splitBtn.addEventListener("click", () => {
     if (player.cards[0].value === player.cards[1].value) {
+        split.turn = true;
         player.split1.push(player.cards[0]);
         player.split2.push(player.cards[1]);
     }
@@ -161,6 +207,6 @@ coinsBtn[0].addEventListener("click", () => { bet(25) });
 coinsBtn[1].addEventListener("click", () => { bet(50) });
 coinsBtn[2].addEventListener("click", () => { bet(100) });
 coinsBtn[3].addEventListener("click", () => { bet(250) });
-coinsBtn[4].addEventListener("click", () => { bet(500) });
+coinsBtn[4].addEventListener("click", () => { bet(500000000) });
 
 export { game }
