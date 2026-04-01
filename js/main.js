@@ -2,6 +2,7 @@ import { player, dealer } from "./entities.js";
 import { messegeWindow } from "./messege-window.js";
 import { Card } from "./card.js";
 import { dealerPointsCheck, playerPointsCheck, bust } from "./points-check.js";
+import { pointsRender } from "./points-render.js";
 
 const hitBtn = document.getElementById("hitBtn");
 const splitBtn = document.getElementById("splitBtn");
@@ -128,6 +129,7 @@ hitBtn.addEventListener("click", () => {
             }
         }
     }
+    pointsRender();
 });
 
 standBtn.addEventListener("click", () => {
@@ -151,6 +153,7 @@ standBtn.addEventListener("click", () => {
     console.log(`Player: ${player.points}`);
     
     dealerTurn();
+    pointsRender();
 });
 
 let split = { 
@@ -207,6 +210,6 @@ coinsBtn[0].addEventListener("click", () => { bet(25) });
 coinsBtn[1].addEventListener("click", () => { bet(50) });
 coinsBtn[2].addEventListener("click", () => { bet(100) });
 coinsBtn[3].addEventListener("click", () => { bet(250) });
-coinsBtn[4].addEventListener("click", () => { bet(500000000) });
+coinsBtn[4].addEventListener("click", () => { bet(500) });
 
 export { game }

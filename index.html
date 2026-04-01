@@ -14,10 +14,6 @@
 <body>
     <main>
         <div id="ui">
-            <div id="counters">
-                <!-- <span id="playerPointsCounter">21</span> -->
-                <p id="betCounter">BET: 0$</p>
-            </div>
             <div id="playerBlock">
                 <img id="profileLogo" src="./img/user_logos/user_default.avif">
                 <div id="counterBg">
@@ -25,9 +21,14 @@
                 </div>
             </div>
         </div>
-        <div id="lands">
-            <div id="dealerLand"></div>
-            <div id="playerLand"></div>
+        <div id="landUi">
+            <span id="betCounter">BET: 0$</span>
+            <span class="pointsCounter" id="pointsDealer">21</span>
+            <div id="lands">
+                <div id="dealerLand"></div>
+                <div id="playerLand"></div>
+            </div>
+            <span class="pointsCounter" id="pointsPlayer">21</span>
         </div>
         <div id="bottomUi">
             <div id="coins">
@@ -49,4 +50,5 @@
 <script type="module" src="js/main.js"></script>
 <script type="module" src="js/card.js"></script>
 <script type="module" src="js/random-number.js"></script>
+<script type="module" src="js/points-render.js"></script>
 </html>

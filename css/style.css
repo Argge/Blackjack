@@ -10,7 +10,6 @@ body {
     background-color: green;
     background-image: url("../img/background.jpg");
     background-size: cover;
-    /* background-size: 80%; */
     background-position: center;
 }
 
@@ -20,7 +19,7 @@ main {
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     align-items: center;
 }
 
@@ -39,6 +38,7 @@ main {
     height: 300px;
     margin-top: 20px;
 
+    transform: translateY(20px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -49,6 +49,7 @@ main {
     height: 300px;
     margin-bottom: 20px;
     
+    transform: translateY(20px);
     display: flex;
     align-items: center;
     justify-content: center;

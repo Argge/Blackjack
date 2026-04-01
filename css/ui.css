@@ -11,6 +11,19 @@
     color: #fff;
 }
 
+#landUi {
+    width: 100%;
+    height: calc(100vh - 100px);
+
+    color: #fff;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 0px;
+}
+
 /* PLAYER BLOCK */
 #playerBlock {
     height: 40px;
@@ -60,9 +73,24 @@
     position: absolute;
     top: 20px;
     font-size: 30px;
+    margin-bottom: 5px;
 }
 
-#playerPointsCounter {
-    position: absolute;
-    bottom: 130px;
+.pointsCounter {
+    width: 25px;
+    height: 25px;
+
+    padding: 15px;
+    margin: 10px 0px 10px 0px;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(3px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .3);
+    font-size: 25px;
+    
+    transform: translateY(20px);
+    display: none;
+    justify-content: center;
+    align-items: center;
 }

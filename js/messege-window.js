@@ -23,6 +23,8 @@ export const messegeWindow = {
         contineBtn.addEventListener("click", () => {
             const dealerLand = document.getElementById("dealerLand");
             const playerLand = document.getElementById("playerLand");
+            const pointsP = document.getElementById("pointsPlayer");
+            const pointsD = document.getElementById("pointsDealer");
 
             const uiDiv = document.getElementById("ui");
             const windowDiv = document.getElementById("modalWin");
@@ -30,6 +32,8 @@ export const messegeWindow = {
 
             dealerLand.innerHTML = "";
             playerLand.innerHTML = "";
+            pointsP.style.display = "none";
+            pointsD.style.display = "none";
             game.isOver = false;
             Array.from(buttons).forEach(button => button.disabled = false);
         });
