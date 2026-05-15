@@ -30,8 +30,8 @@
 #mainButtons {
     width: 450px;
     height: 100%;
-    display: flex;
 
+    display: flex;
 }
 
 .mainBtn {
@@ -64,4 +64,8 @@
 
 #standBtn {
     background-color: #940b06;
+}
+
+.btnText {
+    font-weight: bolder;
 }

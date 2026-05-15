@@ -33,7 +33,6 @@ hitBtn.addEventListener("click", () => {
             player.cards.push(new Card("playerLand"));
             dealer.cards.push(new Card("dealerLand"));
             dealer.cards.push(new Card("dealerLand"));
-
             player.cards[0].render();
             player.cards[1].render();
             dealer.cards[0].render();
@@ -55,6 +54,7 @@ hitBtn.addEventListener("click", () => {
                 player.bank += (game.bet * 2.5);
 
                 player.points = 0;
+
                 player.cards = [];
                 dealer.points = 0;
                 dealer.cards = [];
