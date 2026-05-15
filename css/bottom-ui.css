@@ -15,11 +15,12 @@
     z-index: 2;
 }
 
-#coins {
+#coinsBar {
     width: 600px;
     height: 100%;
 
     background-color: rgba(0, 0, 0, .3);
+    border-radius: 0px 20px 20px 0px;
 
     display: flex;
     justify-content: space-around;
@@ -31,18 +32,6 @@
     height: 100%;
     display: flex;
 
-}
-
-.coinBtn {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 0;
-    background-image: url("../img/poker_coin.png");
-    background-position: center;
-    background-size: 155%;
-    color: #fff;
-    font-size: 20px;
 }
 
 .mainBtn {
@@ -58,6 +47,7 @@
 
 .mainBtn:hover {
     filter: brightness(1.2);
+    cursor: pointer;
 }
 
 #hitBtn {
@@ -69,7 +59,7 @@
 }
 
 #doubleBtn {
-    background-color: #d47e63;
+    background-color: #5371d4;
 }
 
 #standBtn {

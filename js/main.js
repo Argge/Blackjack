@@ -128,8 +128,8 @@ hitBtn.addEventListener("click", () => {
                 setTimeout(() => { playerPointsCheck() }, 100);    
             }
         }
+        pointsRender();
     }
-    pointsRender();
 });
 
 standBtn.addEventListener("click", () => {

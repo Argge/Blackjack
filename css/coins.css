@@ -29,3 +29,21 @@
 #coin500:hover {
     filter: hue-rotate(300deg) brightness(1.5);
 }
+
+.coinBtn {
+    width: 80px;
+    height: 80px;
+    
+    border-radius: 50%;
+    border: 0;
+    background-image: url("../img/poker_coin.png");
+    background-position: center;
+    background-size: 155%;
+    color: #fff;
+    font-size: 20px;
+}
+
+.coinBtn:hover {
+    scale: 1.05;
+    cursor: pointer;
+}
