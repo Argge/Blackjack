@@ -5,6 +5,7 @@ import { dealerPointsCheck, playerPointsCheck, bust } from "./points-check.js";
 import { pointsRender } from "./points-render.js";
 
 const hitBtn = document.getElementById("hitBtn");
+const doubleBtn = document.getElementById("doubleBtn");
 const splitBtn = document.getElementById("splitBtn");
 const standBtn = document.getElementById("standBtn");
 let playerCounter = document.getElementById("playerCounter");
@@ -24,6 +25,9 @@ let game = {
 }
 
 hitBtn.addEventListener("click", () => {
+    standBtn.style.filter = "saturate(1)";
+    doubleBtn.style.filter = "saturate(1)";
+
     if (game.bet === 0) {
         messegeWindow.open("Did a bet!")
     }
@@ -200,6 +204,8 @@ function bet(value) {
     player.bank -= value;
     playerCounter.textContent = `${player.bank}$`;
     betCounter.textContent = `BET: ${game.bet}$`;
+
+    if (game.bet > 0) hitBtn.style.filter = "saturate(1)";
 
     console.log(game.bet);
     console.log(player.bank);

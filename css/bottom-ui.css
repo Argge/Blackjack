@@ -45,30 +45,47 @@
     background-image: url("../img/card_texture.avif");
     background-blend-mode: multiply;
 
-    transform: translateX(15px);
+    transition: 0.2s;
 }
 
 .mainBtn:hover {
     filter: brightness(1.2);
     cursor: pointer;
 
-    transform: translateX(-15px);
+    width: 165px;
 }
 
 #hitBtn {
     background-color: #ffc037;
-}
+    filter: saturate(0);
 
-#splitBtn {
-    background-color: #059257;
+    position: absolute;
+    right: 405px;
 }
 
 #doubleBtn {
     background-color: #5371d4;
+    filter: saturate(0);
+
+    position: absolute;
+    right: 270px;
+}
+
+#splitBtn {
+    background-color: #059257;
+    filter: saturate(0) brightness(0.7);
+
+    position: absolute;
+    right: 135px;
 }
 
 #standBtn {
     background-color: #940b06;
+    filter: saturate(0);  
+
+    z-index: 4;
+    position: absolute;
+    right: 0;
 }
 
 .btnText {
